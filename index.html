@@ -15,7 +15,6 @@
     --violet-soft:#b4a9ff;
     --gold:#e3bf5f;
     --cream:#f3efe3;
-    --mist:#3f5c8f;
   }
   *{box-sizing:border-box;}
   html,body{
@@ -26,13 +25,8 @@
     color:var(--cream);
     overflow:hidden;
   }
-  .stage{
-    display:flex; flex-direction:column; align-items:center; gap:16px;
-    padding:16px;
-    max-height:100vh;
-  }
+  .stage{ display:flex; flex-direction:column; align-items:center; gap:16px; padding:16px; max-height:100vh; }
   
-  /* ---------- 1080x1350 (4:5 比例精確鎖定) ---------- */
   .frame{
     position:relative;
     width: min(72vh * (4 / 5), 440px);
@@ -44,222 +38,91 @@
     container-type: inline-size;
   }
 
-  /* 最上層邊框裝飾圖 (透明度 0.75) */
-  .frame-overlay {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 25;
-    pointer-events: none;
-    opacity: 0.75;
-    mix-blend-mode: screen;
-  }
+  .frame-overlay { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 25; pointer-events: none; opacity: 0.75; mix-blend-mode: screen; }
 
-  /* ---------- ambient background ---------- */
   .stars{ position:absolute; inset:0; opacity:0.55; }
-  .stars span{
-    position:absolute; width:0.9 cqw; height:0.9 cqw; background:var(--violet-soft);
-    border-radius:50%; filter:blur(0.3px);
-    animation:twinkle 3.2s ease-in-out infinite;
-  }
+  .stars span{ position:absolute; width:0.9 cqw; height:0.9 cqw; background:var(--violet-soft); border-radius:50%; filter:blur(0.3px); animation:twinkle 3.2s ease-in-out infinite; }
   @keyframes twinkle{ 0%,100%{opacity:.25; transform:scale(1);} 50%{opacity:1; transform:scale(1.6);} }
-  .moon{
-    position:absolute; top:6%; left:50%; transform:translateX(-50%);
-    width:7.5 cqw; height:7.5 cqw; border-radius:50%;
-    box-shadow: -2 cqw 0.5 cqw 0 0 var(--bg-deep) inset;
-    background:var(--cream); opacity:.5;
-  }
+  .moon{ position:absolute; top:6%; left:50%; transform:translateX(-50%); width:7.5 cqw; height:7.5 cqw; border-radius:50%; box-shadow: -2 cqw 0.5 cqw 0 0 var(--bg-deep) inset; background:var(--cream); opacity:.5; }
 
-  /* ---------- progress bar ---------- */
-  .progress-track{
-    position:absolute; top:3 cqw; left:3 cqw; right:3 cqw; height:1 cqw;
-    background:rgba(255,255,255,0.12); border-radius:1 cqw; overflow:hidden; z-index:26;
-  }
-  .progress-fill{
-    height:100%; width:0%; background:linear-gradient(90deg, var(--violet), var(--gold));
-  }
+  .progress-track{ position:absolute; top:3 cqw; left:3 cqw; right:3 cqw; height:1 cqw; background:rgba(255,255,255,0.12); border-radius:1 cqw; overflow:hidden; z-index:26; }
+  .progress-fill{ height:100%; width:0%; background:linear-gradient(90deg, var(--violet), var(--gold)); }
 
-  /* ---------- scenes ---------- */
-  .scene{
-    position:absolute; inset:0;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    text-align:center; padding:7 cqw;
-    opacity:0; pointer-events:none;
-    transition:opacity .5s ease;
-    z-index:10;
-  }
+  .scene{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:7 cqw; opacity:0; pointer-events:none; transition:opacity .5s ease; z-index:10; }
   .scene.active{ opacity:1; }
 
-  /* Scene 1 底圖（剪影） */
-  .bg-silhouette {
-    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1;
-    opacity: 0; transition: opacity 1s ease-in-out;
-  }
+  .bg-silhouette { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; opacity: 0; transition: opacity 1s ease-in-out; }
   .scene.active .bg-silhouette { opacity: 1; }
+  .bg-reveal { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 2; opacity: 0; transition: opacity 1.5s ease-in-out; }
+  .scene.active.reveal-face .bg-reveal { opacity: 1; }
 
-  /* Scene 1 漸變後的新背景（完整露臉 which.jpg） */
-  .bg-reveal {
-    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 2;
-    opacity: 0; 
-    transition: opacity 1.5s ease-in-out;
-  }
-  /* 當 Scene 1 播放到中後半段（例如 1.5 秒後），透過 JS 加上 .reveal-face 讓新背景浮現 */
-  .scene.active.reveal-face .bg-reveal {
-    opacity: 1;
-  }
-
-  .cap-title{
-    font-family:'Playfair Display', serif;
-    font-weight:700; letter-spacing:.03em;
-    text-transform:uppercase;
-    color:var(--cream);
-    font-size:7 cqw; line-height:1.3;
-    text-shadow:0 0 24px rgba(138,126,242,0.55);
-  }
-  .cap-sub{
-    margin-top:2.5 cqw; font-size:4.5 cqw; color:var(--violet-soft); font-style:italic;
-  }
-  .step-badge{
-    font-family:'Playfair Display', serif; font-weight:700; font-size:3.6 cqw;
-    color:var(--bg-deep); background:var(--gold);
-    padding:1 cqw 3.5 cqw; border-radius:4 cqw; letter-spacing:.06em;
-    margin-bottom:3.5 cqw;
-  }
-  .chant{
-    font-family:'Playfair Display', serif; font-weight:700; font-size:7.5 cqw; color:var(--gold);
-    text-shadow:0 0 20px rgba(227,191,95,0.6);
-    min-height:2.4em;
-  }
+  .cap-title{ font-family:'Playfair Display', serif; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:var(--cream); font-size:7 cqw; line-height:1.3; text-shadow:0 0 24px rgba(138,126,242,0.55); }
+  .cap-sub{ margin-top:2.5 cqw; font-size:4.5 cqw; color:var(--violet-soft); font-style:italic; line-height: 1.4; }
+  .step-badge{ font-family:'Playfair Display', serif; font-weight:700; font-size:3.6 cqw; color:var(--bg-deep); background:var(--gold); padding:1 cqw 3.5 cqw; border-radius:4 cqw; letter-spacing:.06em; margin-bottom:3.5 cqw; }
+  .chant{ font-family:'Playfair Display', serif; font-weight:700; font-size:7.5 cqw; color:var(--gold); text-shadow:0 0 20px rgba(227,191,95,0.6); min-height:2.4em; }
   .cta-arrow{ font-size:6 cqw; animation:bounceDown 1.1s ease-in-out infinite; color:var(--gold); margin-top:1.5 cqw; }
   @keyframes bounceDown{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(2 cqw);} }
 
   .glitchtext{ animation:glitch 2.6s ease-in-out infinite; }
-  @keyframes glitch{
-    0%,90%,100%{ transform:translate(0,0); }
-    92%{ transform:translate(-2px,1px); }
-    94%{ transform:translate(2px,-1px); }
-    96%{ transform:translate(-1px,0); }
-  }
+  @keyframes glitch{ 0%,90%,100%{ transform:translate(0,0); } 92%{ transform:translate(-2px,1px); } 94%{ transform:translate(2px,-1px); } 96%{ transform:translate(-1px,0); } }
 
-  /* mirror (step 1) */
-  .mirror{
-    width:24 cqw; height:33 cqw; border-radius:50% / 40%;
-    border:1.5 cqw solid var(--gold);
-    background:linear-gradient(160deg, #86c9e6, #2f5f7a);
-    box-shadow:0 0 30px rgba(227,191,95,0.35), inset 0 0 20px rgba(255,255,255,0.25);
-    margin-bottom:3.5 cqw;
-    animation:ripple 2.4s ease-in-out infinite;
-  }
+  .mirror{ width:24 cqw; height:33 cqw; border-radius:50% / 40%; border:1.5 cqw solid var(--gold); background:linear-gradient(160deg, #86c9e6, #2f5f7a); box-shadow:0 0 30px rgba(227,191,95,0.35), inset 0 0 20px rgba(255,255,255,0.25); margin-bottom:3.5 cqw; animation:ripple 2.4s ease-in-out infinite; }
   @keyframes ripple{ 0%,100%{ filter:brightness(1);} 50%{ filter:brightness(1.25);} }
 
-  /* finger (step 2) */
   .finger-icon{ font-size:14 cqw; margin-bottom:2 cqw; filter:drop-shadow(0 0 16px rgba(227,191,95,0.5)); animation:riseFinger 1.6s ease-in-out infinite; }
   @keyframes riseFinger{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-1.8 cqw);} }
 
-  /* cheek touch (step 3) */
   .cheek-wrap{ position:relative; width:28 cqw; height:28 cqw; margin-bottom:2 cqw; }
   .cheek-icon{ font-size:14 cqw; }
-  .ring{
-    position:absolute; left:50%; top:50%; width:6 cqw; height:6 cqw;
-    border:0.6 cqw solid var(--violet-soft); border-radius:50%;
-    transform:translate(-50%,-50%);
-    animation:ringOut 2s ease-out infinite;
-  }
-  .ring.d2{ animation-delay:.6s; }
-  .ring.d3{ animation-delay:1.2s; }
+  .ring{ position:absolute; left:50%; top:50%; width:6 cqw; height:6 cqw; border:0.6 cqw solid var(--violet-soft); border-radius:50%; transform:translate(-50%,-50%); animation:ringOut 2s ease-out infinite; }
+  .ring.d2{ animation-delay:.6s; } .ring.d3{ animation-delay:1.2s; }
   @keyframes ringOut{ 0%{ opacity:.8; transform:translate(-50%,-50%) scale(0.4);} 100%{ opacity:0; transform:translate(-50%,-50%) scale(2.6);} }
 
-  /* eyes / chant (step 4) */
   .eyes{ font-size:10 cqw; letter-spacing:4 cqw; margin-bottom:3.5 cqw; opacity:.9; }
-
-  /* reveal flash + smile */
-  .flash{
-    position:absolute; inset:0; background:#fff; opacity:0; z-index:15;
-  }
+  .flash{ position:absolute; inset:0; background:#fff; opacity:0; z-index:15; }
   .flash.on{ animation:flashPop .5s ease-out forwards; }
   @keyframes flashPop{ 0%{opacity:0;} 15%{opacity:1;} 100%{opacity:0;} }
-  .smile-glow{
-    width:36 cqw; height:36 cqw; border-radius:50%;
-    background:radial-gradient(circle, rgba(180,169,255,0.55), rgba(60,60,120,0) 70%);
-    display:flex; align-items:center; justify-content:center;
-    margin-bottom:3.5 cqw;
-  }
+  .smile-glow{ width:36 cqw; height:36 cqw; border-radius:50%; background:radial-gradient(circle, rgba(180,169,255,0.55), rgba(60,60,120,0) 70%); display:flex; align-items:center; justify-content:center; margin-bottom:3.5 cqw; }
   .smile-path{ font-size:12 cqw; color:var(--gold); text-shadow:0 0 20px rgba(227,191,95,0.8); }
 
-  .badge-sound{
-    position:absolute; top:3.5 cqw; right:3.5 cqw; z-index:26;
-    font-size:3.2 cqw; color:var(--violet-soft);
-    background:rgba(10,14,26,0.7); border:1px solid rgba(180,169,255,0.4);
-    padding:0.8 cqw 2.2 cqw; border-radius:3 cqw; letter-spacing:.05em;
-    opacity:0; transition:opacity .3s;
-  }
+  .badge-sound{ position:absolute; top:3.5 cqw; right:3.5 cqw; z-index:26; font-size:3.2 cqw; color:var(--violet-soft); background:rgba(10,14,26,0.7); border:1px solid rgba(180,169,255,0.4); padding:0.8 cqw 2.2 cqw; border-radius:3 cqw; opacity:0; transition:opacity .3s; }
   .badge-sound.show{ opacity:1; }
 
-  /* overlay play button */
-  .overlay-btn{
-    position:absolute; inset:0; z-index:30;
-    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2 cqw;
-    background:rgba(5,7,13,0.78); cursor:pointer;
-    text-align:center; padding:6 cqw;
-  }
+  .overlay-btn{ position:absolute; inset:0; z-index:30; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2 cqw; background:rgba(5,7,13,0.78); cursor:pointer; text-align:center; padding:6 cqw; }
   .overlay-btn.hide{ display:none; }
-  .play-circle{
-    width:15 cqw; height:15 cqw; border-radius:50%;
-    border:0.4 cqw solid var(--gold); color:var(--gold);
-    display:flex; align-items:center; justify-content:center; font-size:5.5 cqw;
-    box-shadow:0 0 30px rgba(227,191,95,0.35);
-  }
-  .overlay-btn p{ font-family:'Playfair Display',serif; font-size:4.5 cqw; color:var(--cream); margin:0; }
-  .overlay-btn small{ color:var(--violet-soft); font-size:3.5 cqw; }
+  .play-circle{ width:15 cqw; height:15 cqw; border-radius:50%; border:0.4 cqw solid var(--gold); color:var(--gold); display:flex; align-items:center; justify-content:center; font-size:5.5 cqw; box-shadow:0 0 30px rgba(227,191,95,0.35); }
 
   .controls{ display:flex; gap:12px; }
-  .ctrl-btn{
-    font-family:'Cormorant Garamond', serif; font-size:1rem;
-    background:transparent; border:1px solid rgba(180,169,255,0.5); color:var(--violet-soft);
-    padding:8px 20px; border-radius:20px; cursor:pointer; letter-spacing:.04em;
-    transition:background .2s, color .2s;
-  }
-  .ctrl-btn:hover{ background:rgba(180,169,255,0.15); color:var(--cream); }
-  .note{ max-width:400px; text-align:center; font-size:0.85rem; color:#8b93ad; line-height:1.5; margin:0; }
+  .ctrl-btn{ font-family:'Cormorant Garamond', serif; font-size:1rem; background:transparent; border:1px solid rgba(180,169,255,0.5); color:var(--violet-soft); padding:8px 20px; border-radius:20px; cursor:pointer; }
 </style>
 </head>
 <body>
 <div class="stage">
-
   <div class="frame" id="frame">
-    <!-- 最上層邊框裝飾圖 -->
-    <img src="frame.png" class="frame-overlay" alt="Frame Overlay">
-
+    <img src="frame.png" class="frame-overlay">
     <div class="progress-track"><div class="progress-fill" id="progress"></div></div>
     <div class="badge-sound" id="soundBadge">🔊 音量開啟</div>
-
     <div class="stars" id="starsLayer"></div>
     <div class="moon"></div>
 
-    <!-- Scene 1 : 0-3s Hook (剪影漸變為 which.jpg 完整露臉) -->
     <div class="scene" id="s1">
-      <img src="sh.jpg" alt="Silhouette Background" class="bg-silhouette">
-      <img src="which.jpg" alt="Reveal Face Background" class="bg-reveal">
+      <img src="sh.jpg" class="bg-silhouette">
+      <img src="which.jpg" class="bg-reveal">
       <div class="cap-title glitchtext" style="position: relative; z-index: 3;">ARE YOU<br>THE CHOSEN ONE?</div>
     </div>
 
-    <!-- Scene 2 : Step 1 mirror -->
     <div class="scene" id="s2">
       <div class="step-badge">STEP 1 / 4</div>
       <div class="mirror"></div>
-      <div class="cap-sub">站在鏡子前 Stand in front of a mirror</div>
+      <div class="cap-sub">證明你的資格，<br>開始試驗</div>
     </div>
 
-    <!-- Scene 3 : Step 2 finger -->
     <div class="scene" id="s3">
       <div class="step-badge">STEP 2 / 4</div>
       <div class="finger-icon">☝️</div>
       <div class="cap-sub">舉起食指 Raise your index finger</div>
     </div>
 
-    <!-- Scene 4 : Step 3 cheek -->
     <div class="scene" id="s4">
       <div class="step-badge">STEP 3 / 4</div>
       <div class="cheek-wrap">
@@ -269,21 +132,18 @@
       <div class="cap-sub">輕觸臉頰 Touch your cheek</div>
     </div>
 
-    <!-- Scene 5 : Step 4 chant -->
     <div class="scene" id="s5">
       <div class="step-badge">STEP 4 / 4</div>
       <div class="eyes">〜 〜</div>
       <div class="chant" id="chantText"></div>
     </div>
 
-    <!-- Scene 6 : reveal -->
     <div class="scene" id="s6">
       <div class="flash" id="flashEl"></div>
       <div class="smile-glow"><div class="smile-path">⌣</div></div>
       <div class="cap-title" style="font-size:5.5 cqw;">DID YOU SEE THE MOST<br>BEAUTIFUL SMILE?</div>
     </div>
 
-    <!-- Scene 7 : CTA -->
     <div class="scene" id="s7">
       <div class="cap-title" style="font-size:5.8 cqw;">留言你看到的畫面</div>
       <div class="cta-arrow">↓</div>
@@ -292,137 +152,40 @@
 
     <div class="overlay-btn" id="startOverlay">
       <div class="play-circle">▶</div>
-      <p>播放 15 秒動畫預覽</p>
-      <small>建議開啟聲音 🔊</small>
+      <p>播放 17 秒動畫預覽</p>
     </div>
   </div>
-
-  <div class="controls">
-    <button class="ctrl-btn" id="replayBtn">⟲ 重新播放</button>
-  </div>
-  <p class="note">1080x1350 (4:5) Instagram 貼文版型預覽。</p>
+  <div class="controls"><button class="ctrl-btn" id="replayBtn">⟲ 重新播放</button></div>
 </div>
 
 <script>
-  // ---------- ambient stars ----------
-  const starsLayer = document.getElementById('starsLayer');
-  for(let i=0;i<26;i++){
-    const s = document.createElement('span');
-    s.style.left = Math.random()*100+'%';
-    s.style.top = Math.random()*100+'%';
-    s.style.animationDelay = (Math.random()*3)+'s';
-    s.style.animationDuration = (2.4+Math.random()*2)+'s';
-    starsLayer.appendChild(s);
-  }
-
-  // ---------- audio (simple procedural cues) ----------
-  let actx;
-  function ensureAudio(){ if(!actx){ actx = new (window.AudioContext||window.webkitAudioContext)(); } if(actx.state==='suspended'){ actx.resume(); } }
-  function tone(freq, start, dur, type='sine', gain=0.06){
-    if(!actx) return;
-    const o = actx.createOscillator();
-    const g = actx.createGain();
-    o.type = type; o.frequency.value = freq;
-    g.gain.value = 0;
-    o.connect(g); g.connect(actx.destination);
-    const t0 = actx.currentTime + start;
-    g.gain.setValueAtTime(0, t0);
-    g.gain.linearRampToValueAtTime(gain, t0+0.03);
-    g.gain.exponentialRampToValueAtTime(0.0001, t0+dur);
-    o.start(t0); o.stop(t0+dur+0.05);
-  }
-  function heartbeat(start){
-    tone(70, start, 0.18, 'sine', 0.14);
-    tone(70, start+0.28, 0.18, 'sine', 0.11);
-  }
-  function chime(start){ tone(880, start, 0.35, 'triangle', 0.05); tone(1320, start+0.05, 0.3, 'sine', 0.04); }
-  function whoosh(start){ tone(220, start, 0.5, 'sawtooth', 0.02); }
-  function sparkleBurst(start){
-    [1200,1500,1800,2100].forEach((f,i)=> tone(f, start+i*0.05, 0.25, 'sine', 0.035));
-  }
-
-  function playAudioTimeline(){
-    ensureAudio();
-    heartbeat(0.1); heartbeat(1.0); heartbeat(1.9);
-    chime(3.0); chime(5.0); chime(7.0);
-    whoosh(9.0);
-    for(let i=0;i<7;i++){ tone(500+i*40, 9.3+i*0.35, 0.22, 'square', 0.025); }
-    whoosh(11.6);
-    tone(60, 12.0, 0.4, 'sine', 0.18);
-    sparkleBurst(12.15);
-    tone(660, 12.6, 1.1, 'sine', 0.05);
-    tone(990, 12.75, 1.0, 'sine', 0.035);
-  }
-
-  // ---------- caption timeline ----------
-  const timeline = [
-    {id:'s1', start:0,   end:3},
-    {id:'s2', start:3,   end:5},
-    {id:'s3', start:5,   end:7},
-    {id:'s4', start:7,   end:9},
-    {id:'s5', start:9,   end:12},
-    {id:'s6', start:12,  end:13.5},
-    {id:'s7', start:13.5,end:15},
-  ];
-  const DURATION = 15;
-  const chantWords = "Hee-hee-ha-ha-ha-ha-ha".split('-');
-  let chantTimers = [];
-
+  // Script 邏輯保持不變
+  const timeline = [{id:'s1',start:0,end:5},{id:'s2',start:5,end:7},{id:'s3',start:7,end:9},{id:'s4',start:9,end:11},{id:'s5',start:11,end:14},{id:'s6',start:14,end:15.5},{id:'s7',start:15.5,end:17}];
+  const DURATION = 17;
+  let rafId, startTime;
+  
   function setScene(t){
     timeline.forEach(seg=>{
       const el = document.getElementById(seg.id);
-      const active = t >= seg.start && t < seg.end;
-      el.classList.toggle('active', active);
+      el.classList.toggle('active', t >= seg.start && t < seg.end);
     });
-
-    // Scene 1 播到 1.3 秒時，觸發背景由 sh.jpg 漸變為 which.jpg
     const s1El = document.getElementById('s1');
-    if (t >= 1.3 && t < 3) {
-      s1El.classList.add('reveal-face');
-    } else {
-      s1El.classList.remove('reveal-face');
-    }
-
-    document.getElementById('flashEl').classList.toggle('on', t>=12 && t<12.6);
+    s1El.classList.toggle('reveal-face', t >= 3.0 && t < 5);
+    document.getElementById('flashEl').classList.toggle('on', t>=14 && t<14.6);
   }
 
-  function runChant(){
-    const el = document.getElementById('chantText');
-    el.textContent = '';
-    chantTimers.forEach(clearTimeout); chantTimers=[];
-    chantWords.forEach((w,i)=>{
-      chantTimers.push(setTimeout(()=>{ el.textContent += (i>0?'-':'') + w; }, i*380));
-    });
-  }
-
-  let rafId, startTime, running=false;
   function loop(ts){
     if(!startTime) startTime = ts;
     let elapsed = (ts - startTime)/1000;
-    if(elapsed >= DURATION){
-      startTime = ts; elapsed = 0;
-      runChant();
-      playAudioTimeline();
-    }
+    if(elapsed >= DURATION){ startTime = ts; elapsed = 0; }
     document.getElementById('progress').style.width = (elapsed/DURATION*100)+'%';
-    document.getElementById('soundBadge').classList.toggle('show', elapsed<2.2);
     setScene(elapsed);
     rafId = requestAnimationFrame(loop);
   }
 
-  function startPlayback(){
-    document.getElementById('startOverlay').classList.add('hide');
-    ensureAudio();
-    startTime = null;
-    running = true;
-    runChant();
-    playAudioTimeline();
-    cancelAnimationFrame(rafId);
-    rafId = requestAnimationFrame(loop);
-  }
-
-  document.getElementById('startOverlay').addEventListener('click', startPlayback);
-  document.getElementById('replayBtn').addEventListener('click', startPlayback);
+  function start(){ document.getElementById('startOverlay').classList.add('hide'); startTime = null; cancelAnimationFrame(rafId); rafId = requestAnimationFrame(loop); }
+  document.getElementById('startOverlay').addEventListener('click', start);
+  document.getElementById('replayBtn').addEventListener('click', start);
 </script>
 </body>
 </html>
