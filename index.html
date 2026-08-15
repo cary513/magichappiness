@@ -64,27 +64,28 @@
   .cap-sub{ margin-top:2 cqw; font-size:4.2 cqw; color:var(--violet-soft); font-style:italic; line-height: 1.4; position: relative; z-index: 3; text-shadow: 0 2px 8px rgba(0,0,0,0.8); }
   .step-badge{ font-family:'Playfair Display', serif; font-weight:700; font-size:3.6 cqw; color:var(--bg-deep); background:var(--gold); padding:1 cqw 3.5 cqw; border-radius:4 cqw; letter-spacing:.06em; margin-bottom:2 cqw; position: relative; z-index: 3; }
   
-  /* 跳動發光的 START 按鈕 */
+  /* 跳動發光的 START 按鈕設定 */
   .start-btn {
+    display: inline-block;
     position: relative;
-    z-index: 3;
-    margin-top: 4 cqw;
+    z-index: 5;
+    margin-top: 5 cqw;
     font-family: 'Playfair Display', serif;
     font-weight: 700;
-    font-size: 4 cqw;
-    letter-spacing: 0.1em;
+    font-size: 4.5 cqw;
+    letter-spacing: 0.12em;
     color: var(--bg-deep);
-    background: linear-gradient(135deg, var(--gold), #fff0b3);
+    background: linear-gradient(135deg, var(--gold), #fff2cc);
     border: none;
-    padding: 1.5 cqw 5 cqw;
-    border-radius: 5 cqw;
+    padding: 2 cqw 6 cqw;
+    border-radius: 6 cqw;
     cursor: pointer;
-    box-shadow: 0 0 20px rgba(227, 191, 95, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.8);
-    animation: pulseGlow 1.5s ease-in-out infinite;
+    box-shadow: 0 0 25px rgba(227, 191, 95, 0.7), inset 0 0 10px rgba(255, 255, 255, 0.9);
+    animation: pulseGlow 1.4s ease-in-out infinite;
   }
   @keyframes pulseGlow {
-    0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(227, 191, 95, 0.5); }
-    50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(227, 191, 95, 0.9), 0 0 50px rgba(180, 169, 255, 0.5); }
+    0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(227, 191, 95, 0.6); }
+    50% { transform: scale(1.08); box-shadow: 0 0 35px rgba(227, 191, 95, 0.95), 0 0 55px rgba(180, 169, 255, 0.6); }
   }
 
   .chant{ font-family:'Playfair Display', serif; font-weight:700; font-size:7.5 cqw; color:var(--gold); text-shadow:0 0 20px rgba(227,191,95,0.6); min-height:2.4em; }
@@ -177,7 +178,6 @@
 </div>
 
 <script>
-  // 總長度調整為 17 秒，Scene 2 佔 5 秒 (5秒到10秒)
   const timeline = [
     {id:'s1', start:0,  end:5},
     {id:'s2', start:5,  end:10},
