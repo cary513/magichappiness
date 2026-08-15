@@ -57,7 +57,7 @@
   .bg-reveal { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 2; opacity: 0; transition: opacity 1.5s ease-in-out; }
   .scene.active.reveal-face .bg-reveal { opacity: 1; }
 
-  /* Scene 1 標題 */
+  /* Scene 1 標題：無抖動，第 4 秒開始慢慢消失 */
   .cap-title{ 
     font-family:'Playfair Display', serif; 
     font-weight:700; 
@@ -75,12 +75,12 @@
     opacity: 0;
   }
 
-  /* Scene 2 背景圖片 (which_2.jpg) 及內容排版：往下移至白煙霧中心以避開臉部 */
+  /* Scene 2 背景圖片 (which_2.jpg) 及內容排版：下移至底部白煙霧區，完全不擋臉 */
   .bg-which2 { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
   
   .scene-2-content {
     position: absolute;
-    bottom: 6 cqw; /* 增加底部距離，將整組內容再往下推 */
+    bottom: 4 cqw; 
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
