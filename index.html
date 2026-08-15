@@ -156,19 +156,22 @@
     height: 100%;
     padding-top: 4 cqw;
   }
-
-  .step-badge{
-    font-family:'Playfair Display', serif; 
-    font-weight:700; 
-    font-size: 3 cqw;
-    color: var(--bg-deep); 
-    background: var(--gold);
-    padding: 0.8 cqw 3 cqw; 
-    border-radius: 4 cqw; 
-    letter-spacing: .06em;
-    margin-bottom: 7 cqw;
-    flex-shrink: 0;
+  .cap-sub{
+    margin-top:10px; font-size:1.05rem; color:var(--violet-soft); font-style:italic;
   }
+  .step-badge{
+    font-family:'Playfair Display', serif; font-weight:700; font-size:0.85rem;
+    color:var(--bg-deep); background:var(--gold);
+    padding:4px 12px; border-radius:20px; letter-spacing:.06em;
+    margin-bottom:14px;
+  }
+  .chant{
+    font-family:'Playfair Display', serif; font-weight:700; font-size:1.7rem; color:var(--gold);
+    text-shadow:0 0 16px rgba(227,191,95,0.6);
+    min-height:2.4em;
+  }
+  .cta-arrow{ font-size:1.4rem; animation:bounceDown 1.1s ease-in-out infinite; color:var(--gold); }
+  @keyframes bounceDown{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(8px);} }
 
   .step-graphic-area {
     height: 34 cqw;
