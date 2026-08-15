@@ -44,8 +44,8 @@
     container-type: inline-size;
   }
 
-  /* 最上層邊框裝飾圖 */
-.frame-overlay {
+  /* 最上層邊框裝飾圖 (透明度設為 0.75) */
+  .frame-overlay {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -54,6 +54,7 @@
     z-index: 25;
     pointer-events: none;
     opacity: 0.75;
+    mix-blend-mode: screen;
   }
 
   /* ---------- ambient background ---------- */
@@ -229,7 +230,6 @@
 <div class="stage">
 
   <div class="frame" id="frame">
-    <!-- 最上層裝飾邊框 (請確保同專案中有上傳這張圖片，或將 src 換成你的圖檔名稱) -->
     <img src="frame.png" class="frame-overlay" alt="Frame Overlay">
 
     <div class="progress-track"><div class="progress-fill" id="progress"></div></div>
@@ -302,7 +302,7 @@
   <div class="controls">
     <button class="ctrl-btn" id="replayBtn">⟲ 重新播放</button>
   </div>
-  <p class="note">1080x1350 (4:5) Instagram 貼文版型預覽（已套用最上層裝飾框）。</p>
+  <p class="note">1080x1350 (4:5) Instagram 貼文版型預覽。</p>
 </div>
 
 <script>
