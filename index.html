@@ -75,12 +75,12 @@
     opacity: 0;
   }
 
-  /* Scene 2 背景圖片 (which_2.jpg) 及內容排版：下移至底部白煙霧區，完全不擋臉 */
+  /* Scene 2 背景圖片 (which_2.jpg) 及內容排版：貼近底部不擋臉 */
   .bg-which2 { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
   
   .scene-2-content {
     position: absolute;
-    bottom: 4 cqw; 
+    bottom: 2.5 cqw;
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
@@ -96,7 +96,7 @@
     font-style: italic; 
     line-height: 1.4; 
     text-shadow: 0 2px 8px rgba(0,0,0,0.9);
-    margin-bottom: 2 cqw;
+    margin-bottom: 1.8 cqw;
     white-space: nowrap;
   }
   
@@ -110,7 +110,7 @@
     color: var(--bg-deep);
     background: linear-gradient(135deg, var(--gold), #fff2cc);
     border: none;
-    padding: 1.5 cqw 5 cqw;
+    padding: 1.4 cqw 4.8 cqw;
     border-radius: 5 cqw;
     cursor: pointer;
     box-shadow: 0 0 20px rgba(227, 191, 95, 0.7), inset 0 0 10px rgba(255, 255, 255, 0.9);
@@ -155,6 +155,7 @@
     <!-- Scene 1 : 0-5s Hook -->
     <div class="scene" id="s1">
       <img src="sh.jpg" class="bg-silhouette">
+      <img src="which.jpg" class="bg-reveal">
       <div class="cap-title">ARE YOU<br>THE CHOSEN ONE?</div>
     </div>
 
