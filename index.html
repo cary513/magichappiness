@@ -117,13 +117,6 @@
     line-height: 1.4; 
     text-shadow: 0 2px 8px rgba(0,0,0,0.9);
     white-space: nowrap;
-    opacity: 0;
-    transform: translateY(1 cqw);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-  .scene.active .cap-sub.fade-in-text {
-    opacity: 1;
-    transform: translateY(0);
   }
   
   .start-btn {
@@ -272,7 +265,7 @@
     <div class="scene" id="s2">
       <img src="./which_2.jpg" class="bg-which3">
       <div class="scene-2-content">
-        <div class="cap-sub" id="secretText">接下來發生的事，請不要告訴別人</div>
+        <div class="cap-sub">接下來發生的事，請不要告訴別人</div>
         <button class="start-btn">START</button>
       </div>
     </div>
@@ -374,13 +367,6 @@
       const el = document.getElementById(seg.id);
       el.classList.toggle('active', t >= seg.start && t < seg.end);
     });
-
-    const secretText = document.getElementById('secretText');
-    if (t >= 2.8 && t < 6.5) {
-      secretText.classList.add('fade-in-text');
-    } else {
-      secretText.classList.remove('fade-in-text');
-    }
 
     document.getElementById('flashEl').classList.toggle('on', t>=15 && t<15.6);
   }
