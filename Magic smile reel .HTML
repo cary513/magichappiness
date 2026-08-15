@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>尋找魔法微笑 — Reels 動畫預覽</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#080b16;
+    --bg-mid:#101a30;
+    --bg-glow:#1c2c4e;
+    --violet:#8a7ef2;
+    --violet-soft:#b4a9ff;
+    --gold:#e3bf5f;
+    --cream:#f3efe3;
+    --mist:#3f5c8f;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0; height:100%;
+    background:#05070d;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Cormorant Garamond', serif;
+    color:var(--cream);
+  }
+  .stage{
+    display:flex; flex-direction:column; align-items:center; gap:14px;
+    padding:24px 12px;
+  }
+  .frame{
+    position:relative;
+    width:min(88vw, 340px);
+    aspect-ratio:9/16;
+    border-radius:22px;
+    overflow:hidden;
+    background:radial-gradient(120% 90% at 50% 20%, var(--bg-glow) 0%, var(--bg-mid) 45%, var(--bg-deep) 100%);
+    box-shadow:0 0 0 1px rgba(255,255,255,0.06), 0 25px 60px rgba(0,0,0,0.6);
+  }
+  /* ---------- ambient background ---------- */
+  .stars{ position:absolute; inset:0; opacity:0.55; }
+  .stars span{
+    position:absolute; width:3px; height:3px; background:var(--violet-soft);
+    border-radius:50%; filter:blur(0.3px);
+    animation:twinkle 3.2s ease-in-out infinite;
+  }
+  @keyframes twinkle{ 0%,100%{opacity:.25; transform:scale(1);} 50%{opacity:1; transform:scale(1.6);} }
+  .vine{ position:absolute; opacity:.35; }
+  .moon{
+    position:absolute; top:6%; left:50%; transform:translateX(-50%);
+    width:26px; height:26px; border-radius:50%;
+    box-shadow: -8px 2px 0 0 var(--bg-deep) inset;
+    background:var(--cream); opacity:.5;
+  }
+  /* ---------- progress bar ---------- */
+  .progress-track{
+    position:absolute; top:10px; left:10px; right:10px; height:3px;
+    background:rgba(255,255,255,0.12); border-radius:2px; overflow:hidden; z-index:20;
+  }
+  .progress-fill{
+    height:100%; width:0%; background:linear-gradient(90deg, var(--violet), var(--gold));
+  }
+  /* ---------- scenes ---------- */
+  .scene{
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:26px;
+    opacity:0; pointer-events:none;
+    transition:opacity .5s ease;
+  }
+  .scene.active{ opacity:1; }
+  .cap-title{
+    font-family:'Playfair Display', serif;
+    font-weight:700; letter-spacing:.03em;
+    text-transform:uppercase;
+    color:var(--cream);
+    font-size:1.5rem; line-height:1.35;
+    text-shadow:0 0 18px rgba(138,126,242,0.55);
+  }
+  .cap-sub{
+    margin-top:10px; font-size:1.05rem; color:var(--violet-soft); font-style:italic;
+  }
+  .step-badge{
+    font-family:'Playfair Display', serif; font-weight:700; font-size:0.85rem;
+    color:var(--bg-deep); background:var(--gold);
+    padding:4px 12px; border-radius:20px; letter-spacing:.06em;
+    margin-bottom:14px;
+  }
+  .chant{
+    font-family:'Playfair Display', serif; font-weight:700; font-size:1.7rem; color:var(--gold);
+    text-shadow:0 0 16px rgba(227,191,95,0.6);
+    min-height:2.4em;
+  }
+  .cta-arrow{ font-size:1.4rem; animation:bounceDown 1.1s ease-in-out infinite; color:var(--gold); }
+  @keyframes bounceDown{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(8px);} }
+
+  /* silhouette (scene 1) */
+  .witch-wrap{ position:relative; width:120px; height:170px; margin-bottom:8px; }
+  .hat{
+    position:absolute; left:50%; top:0; transform:translateX(-50%);
+    width:0; height:0;
+    border-left:34px solid transparent;
+    border-right:34px solid transparent;
+    border-bottom:90px solid #05060c;
+    filter:drop-shadow(0 0 22px rgba(120,110,220,0.35));
+    animation:sway 4s ease-in-out infinite;
+  }
+  .robe{
+    position:absolute; left:50%; top:78px; transform:translateX(-50%);
+    width:0; height:0;
+    border-left:52px solid transparent;
+    border-right:52px solid transparent;
+    border-bottom:92px solid #06070f;
+    filter:drop-shadow(0 0 26px rgba(120,110,220,0.3));
+  }
+  @keyframes sway{ 0%,100%{ transform:translateX(-50%) rotate(-1.2deg);} 50%{ transform:translateX(-50%) rotate(1.2deg);} }
+  .glitchtext{ animation:glitch 2.6s ease-in-out infinite; }
+  @keyframes glitch{
+    0%,90%,100%{ transform:translate(0,0); }
+    92%{ transform:translate(-1.5px,0.5px); }
+    94%{ transform:translate(1.5px,-0.5px); }
+    96%{ transform:translate(-1px,0); }
+  }
+
+  /* mirror (step 1) */
+  .mirror{
+    width:80px; height:110px; border-radius:50% / 40%;
+    border:6px solid var(--gold);
+    background:linear-gradient(160deg, #86c9e6, #2f5f7a);
+    box-shadow:0 0 24px rgba(227,191,95,0.35), inset 0 0 20px rgba(255,255,255,0.25);
+    margin-bottom:16px;
+    animation:ripple 2.4s ease-in-out infinite;
+  }
+  @keyframes ripple{ 0%,100%{ filter:brightness(1);} 50%{ filter:brightness(1.25);} }
+
+  /* finger (step 2) */
+  .finger-icon{ font-size:3rem; margin-bottom:10px; filter:drop-shadow(0 0 14px rgba(227,191,95,0.5)); animation:riseFinger 1.6s ease-in-out infinite; }
+  @keyframes riseFinger{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-6px);} }
+
+  /* cheek touch (step 3) */
+  .cheek-wrap{ position:relative; width:100px; height:100px; margin-bottom:10px; }
+  .cheek-icon{ font-size:3rem; }
+  .ring{
+    position:absolute; left:50%; top:50%; width:20px; height:20px;
+    border:2px solid var(--violet-soft); border-radius:50%;
+    transform:translate(-50%,-50%);
+    animation:ringOut 2s ease-out infinite;
+  }
+  .ring.d2{ animation-delay:.6s; }
+  .ring.d3{ animation-delay:1.2s; }
+  @keyframes ringOut{ 0%{ opacity:.8; transform:translate(-50%,-50%) scale(0.4);} 100%{ opacity:0; transform:translate(-50%,-50%) scale(2.6);} }
+
+  /* eyes / chant (step 4) */
+  .eyes{ font-size:2.2rem; letter-spacing:14px; margin-bottom:14px; opacity:.9; }
+
+  /* reveal flash + smile */
+  .flash{
+    position:absolute; inset:0; background:#fff; opacity:0;
+  }
+  .flash.on{ animation:flashPop .5s ease-out forwards; }
+  @keyframes flashPop{ 0%{opacity:0;} 15%{opacity:1;} 100%{opacity:0;} }
+  .smile-glow{
+    width:130px; height:130px; border-radius:50%;
+    background:radial-gradient(circle, rgba(180,169,255,0.55), rgba(60,60,120,0) 70%);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:14px;
+  }
+  .smile-path{ font-size:2.6rem; color:var(--gold); text-shadow:0 0 20px rgba(227,191,95,0.8); }
+
+  .badge-sound{
+    position:absolute; top:16px; right:14px; z-index:21;
+    font-size:0.75rem; color:var(--violet-soft);
+    background:rgba(10,14,26,0.6); border:1px solid rgba(180,169,255,0.4);
+    padding:3px 8px; border-radius:12px; letter-spacing:.05em;
+    opacity:0; transition:opacity .3s;
+  }
+  .badge-sound.show{ opacity:1; }
+
+  /* overlay play button */
+  .overlay-btn{
+    position:absolute; inset:0; z-index:30;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+    background:rgba(5,7,13,0.72); cursor:pointer;
+    text-align:center; padding:20px;
+  }
+  .overlay-btn.hide{ display:none; }
+  .play-circle{
+    width:58px; height:58px; border-radius:50%;
+    border:1.5px solid var(--gold); color:var(--gold);
+    display:flex; align-items:center; justify-content:center; font-size:1.4rem;
+    box-shadow:0 0 26px rgba(227,191,95,0.35);
+  }
+  .overlay-btn p{ font-family:'Playfair Display',serif; font-size:0.95rem; color:var(--cream); margin:0; }
+  .overlay-btn small{ color:var(--violet-soft); font-size:0.78rem; }
+
+  .controls{ display:flex; gap:10px; }
+  .ctrl-btn{
+    font-family:'Cormorant Garamond', serif; font-size:0.95rem;
+    background:transparent; border:1px solid rgba(180,169,255,0.5); color:var(--violet-soft);
+    padding:8px 18px; border-radius:20px; cursor:pointer; letter-spacing:.04em;
+    transition:background .2s, color .2s;
+  }
+  .ctrl-btn:hover{ background:rgba(180,169,255,0.15); color:var(--cream); }
+  .note{ max-width:340px; text-align:center; font-size:0.85rem; color:#8b93ad; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="frame" id="frame">
+    <div class="progress-track"><div class="progress-fill" id="progress"></div></div>
+    <div class="badge-sound" id="soundBadge">🔊 音量開啟</div>
+
+    <div class="stars" id="starsLayer"></div>
+    <div class="moon"></div>
+
+    <!-- Scene 1 : 0-3s Hook -->
+    <div class="scene" id="s1">
+      <div class="witch-wrap">
+        <div class="hat"></div>
+        <div class="robe"></div>
+      </div>
+      <div class="cap-title glitchtext">ARE YOU<br>THE CHOSEN ONE?</div>
+    </div>
+
+    <!-- Scene 2 : Step 1 mirror -->
+    <div class="scene" id="s2">
+      <div class="step-badge">STEP 1 / 4</div>
+      <div class="mirror"></div>
+      <div class="cap-sub">站在鏡子前 Stand in front of a mirror</div>
+    </div>
+
+    <!-- Scene 3 : Step 2 finger -->
+    <div class="scene" id="s3">
+      <div class="step-badge">STEP 2 / 4</div>
+      <div class="finger-icon">☝️</div>
+      <div class="cap-sub">舉起食指 Raise your index finger</div>
+    </div>
+
+    <!-- Scene 4 : Step 3 cheek -->
+    <div class="scene" id="s4">
+      <div class="step-badge">STEP 3 / 4</div>
+      <div class="cheek-wrap">
+        <div class="ring"></div><div class="ring d2"></div><div class="ring d3"></div>
+        <div class="cheek-icon">🫵</div>
+      </div>
+      <div class="cap-sub">輕觸臉頰 Touch your cheek</div>
+    </div>
+
+    <!-- Scene 5 : Step 4 chant -->
+    <div class="scene" id="s5">
+      <div class="step-badge">STEP 4 / 4</div>
+      <div class="eyes">〜　〜</div>
+      <div class="chant" id="chantText"></div>
+    </div>
+
+    <!-- Scene 6 : reveal -->
+    <div class="scene" id="s6">
+      <div class="flash" id="flashEl"></div>
+      <div class="smile-glow"><div class="smile-path">⌣</div></div>
+      <div class="cap-title" style="font-size:1.15rem;">DID YOU SEE THE MOST<br>BEAUTIFUL SMILE?</div>
+    </div>
+
+    <!-- Scene 7 : CTA -->
+    <div class="scene" id="s7">
+      <div class="cap-title" style="font-size:1.2rem;">留言你看到的畫面</div>
+      <div class="cta-arrow">↓</div>
+      <div class="cap-sub">標記一位也該找到<br>魔法微笑的人 ✨</div>
+    </div>
+
+    <div class="overlay-btn" id="startOverlay">
+      <div class="play-circle">▶</div>
+      <p>播放 15 秒動畫預覽</p>
+      <small>建議開啟聲音 🔊</small>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="ctrl-btn" id="replayBtn">⟲ 重新播放</button>
+  </div>
+  <p class="note">此為腳本節奏動態示意（Animatic），供分鏡與剪輯師對時參考；正式製作請以此時間軸套用真實魔法插畫 / 實拍素材與音效。</p>
+</div>
+
+<script>
+  // ---------- ambient stars ----------
+  const starsLayer = document.getElementById('starsLayer');
+  for(let i=0;i<26;i++){
+    const s = document.createElement('span');
+    s.style.left = Math.random()*100+'%';
+    s.style.top = Math.random()*100+'%';
+    s.style.animationDelay = (Math.random()*3)+'s';
+    s.style.animationDuration = (2.4+Math.random()*2)+'s';
+    starsLayer.appendChild(s);
+  }
+
+  // ---------- audio (simple procedural cues) ----------
+  let actx;
+  function ensureAudio(){ if(!actx){ actx = new (window.AudioContext||window.webkitAudioContext)(); } if(actx.state==='suspended'){ actx.resume(); } }
+  function tone(freq, start, dur, type='sine', gain=0.06){
+    if(!actx) return;
+    const o = actx.createOscillator();
+    const g = actx.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.value = 0;
+    o.connect(g); g.connect(actx.destination);
+    const t0 = actx.currentTime + start;
+    g.gain.setValueAtTime(0, t0);
+    g.gain.linearRampToValueAtTime(gain, t0+0.03);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0+dur);
+    o.start(t0); o.stop(t0+dur+0.05);
+  }
+  function heartbeat(start){
+    tone(70, start, 0.18, 'sine', 0.14);
+    tone(70, start+0.28, 0.18, 'sine', 0.11);
+  }
+  function chime(start){ tone(880, start, 0.35, 'triangle', 0.05); tone(1320, start+0.05, 0.3, 'sine', 0.04); }
+  function whoosh(start){ tone(220, start, 0.5, 'sawtooth', 0.02); }
+  function sparkleBurst(start){
+    [1200,1500,1800,2100].forEach((f,i)=> tone(f, start+i*0.05, 0.25, 'sine', 0.035));
+  }
+
+  function playAudioTimeline(){
+    ensureAudio();
+    heartbeat(0.1); heartbeat(1.0); heartbeat(1.9);
+    chime(3.0); chime(5.0); chime(7.0);
+    whoosh(9.0);
+    for(let i=0;i<7;i++){ tone(500+i*40, 9.3+i*0.35, 0.22, 'square', 0.025); }
+    whoosh(11.6);
+    tone(60, 12.0, 0.4, 'sine', 0.18); // flash thump
+    sparkleBurst(12.15);
+    tone(660, 12.6, 1.1, 'sine', 0.05);
+    tone(990, 12.75, 1.0, 'sine', 0.035);
+  }
+
+  // ---------- caption timeline ----------
+  const scenes = ['s1','s2','s3','s4','s5','s6','s7'];
+  const timeline = [
+    {id:'s1', start:0,   end:3},
+    {id:'s2', start:3,   end:5},
+    {id:'s3', start:5,   end:7},
+    {id:'s4', start:7,   end:9},
+    {id:'s5', start:9,   end:12},
+    {id:'s6', start:12,  end:13.5},
+    {id:'s7', start:13.5,end:15},
+  ];
+  const DURATION = 15;
+  const chantWords = "Hee-hee-ha-ha-ha-ha-ha".split('-');
+  let chantTimers = [];
+
+  function setScene(t){
+    timeline.forEach(seg=>{
+      const el = document.getElementById(seg.id);
+      const active = t >= seg.start && t < seg.end;
+      el.classList.toggle('active', active);
+    });
+    document.getElementById('flashEl').classList.toggle('on', t>=12 && t<12.6);
+  }
+
+  function runChant(){
+    const el = document.getElementById('chantText');
+    el.textContent = '';
+    chantTimers.forEach(clearTimeout); chantTimers=[];
+    chantWords.forEach((w,i)=>{
+      chantTimers.push(setTimeout(()=>{ el.textContent += (i>0?'-':'') + w; }, i*380));
+    });
+  }
+
+  let rafId, startTime, running=false;
+  function loop(ts){
+    if(!startTime) startTime = ts;
+    let elapsed = (ts - startTime)/1000;
+    if(elapsed >= DURATION){
+      startTime = ts; elapsed = 0;
+      runChant();
+      playAudioTimeline();
+    }
+    document.getElementById('progress').style.width = (elapsed/DURATION*100)+'%';
+    document.getElementById('soundBadge').classList.toggle('show', elapsed<2.2);
+    setScene(elapsed);
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function startPlayback(){
+    document.getElementById('startOverlay').classList.add('hide');
+    ensureAudio();
+    startTime = null;
+    running = true;
+    runChant();
+    playAudioTimeline();
+    cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(loop);
+  }
+
+  document.getElementById('startOverlay').addEventListener('click', startPlayback);
+  document.getElementById('replayBtn').addEventListener('click', startPlayback);
+</script>
+</body>
+</html>
