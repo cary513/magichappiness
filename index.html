@@ -84,12 +84,12 @@
   }
 
   .cap-sub{ 
-    font-size: 3.6 cqw; 
+    font-size: 4.2 cqw; 
     color: var(--violet-soft); 
     font-style: italic; 
     line-height: 1.4; 
     text-shadow: 0 2px 8px rgba(0,0,0,0.9);
-    margin-bottom: 1.8 cqw;
+    margin-top: 3.5 cqw;
     white-space: nowrap;
     opacity: 0;
     transform: translateY(1 cqw);
@@ -124,28 +124,28 @@
     font-family:'Playfair Display', serif; font-weight:700; font-size:3.2 cqw;
     color:var(--bg-deep); background:var(--gold);
     padding:1 cqw 3.5 cqw; border-radius:4 cqw; letter-spacing:.06em;
-    margin-bottom:2 cqw;
+    margin-bottom: 6 cqw;
   }
 
   .mirror {
-    width: 26 cqw;
-    height: 34 cqw;
+    width: 22 cqw;
+    height: 29 cqw;
     background-image: url('./mirro.png');
     background-size: cover;
     background-position: center;
     border-radius: 50% / 40%;
-    border: 5px solid var(--gold);
+    border: 4px solid var(--gold);
     box-shadow: 0 0 24px rgba(227,191,95,0.35), inset 0 0 20px rgba(255,255,255,0.25);
-    margin-bottom: 2.5 cqw;
+    margin-bottom: 5.5 cqw;
     animation: ripple 2.4s ease-in-out infinite;
   }
   @keyframes ripple{ 0%,100%{ filter:brightness(1);} 50%{ filter:brightness(1.25);} }
 
-  .finger-icon{ font-size: 11 cqw; margin-bottom: 2 cqw; filter: drop-shadow(0 0 14px rgba(227,191,95,0.5)); animation: riseFinger 1.6s ease-in-out infinite; }
+  .finger-icon{ font-size: 15 cqw; margin-bottom: 5 cqw; filter: drop-shadow(0 0 14px rgba(227,191,95,0.5)); animation: riseFinger 1.6s ease-in-out infinite; }
   @keyframes riseFinger{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-1.5 cqw);} }
 
-  .cheek-wrap{ position:relative; width:22 cqw; height:22 cqw; margin-bottom:2 cqw; display:flex; align-items:center; justify-content:center; }
-  .cheek-icon{ font-size: 10 cqw; z-index: 2; }
+  .cheek-wrap{ position:relative; width:18 cqw; height:18 cqw; margin-bottom: 5.5 cqw; display:flex; align-items:center; justify-content:center; }
+  .cheek-icon{ font-size: 13.5 cqw; z-index: 2; }
   .ring{
     position:absolute; left:50%; top:50%; width:5 cqw; height:5 cqw;
     border:2px solid var(--violet-soft); border-radius:50%;
@@ -189,36 +189,36 @@
     <div class="stars" id="starsLayer"></div>
     <div class="moon"></div>
 
-    <!-- Scene 1 : 0-3s Hook -->
+    <!-- Scene 1 : 0-2.5s Hook -->
     <div class="scene" id="s1">
       <img src="./sh.jpg" class="bg-silhouette">
       <div class="cap-title">ARE YOU<br>THE CHOSEN ONE?</div>
     </div>
 
-    <!-- Scene 2 : which_2.jpg (停留 4 秒：3s ~ 7s) -->
+    <!-- Scene 2 : which_2.jpg (停留 4 秒：2.5s ~ 6.5s) -->
     <div class="scene" id="s2">
       <img src="./which_2.jpg" class="bg-which3">
       <div class="scene-2-content">
-        <div class="cap-sub" id="secretText">接下來發生的事，請不要告訴別人</div>
         <button class="start-btn">START</button>
+        <div class="cap-sub" id="secretText">接下來發生的事，請不要告訴別人</div>
       </div>
     </div>
 
-    <!-- Scene 3 : Step 1 Mirror (7s ~ 9.5s) -->
+    <!-- Scene 3 : Step 1 Mirror (6.5s ~ 9s) -->
     <div class="scene" id="s3">
       <div class="step-badge">STEP 1 / 4</div>
       <div class="mirror"></div>
       <div class="cap-sub" style="opacity:1; transform:translateY(0);">站在鏡子前 Stand in front of a mirror</div>
     </div>
 
-    <!-- Scene 4 : Step 2 Finger (9.5s ~ 11.5s) -->
+    <!-- Scene 4 : Step 2 Finger (9s ~ 11s) -->
     <div class="scene" id="s4">
       <div class="step-badge">STEP 2 / 4</div>
       <div class="finger-icon">☝️</div>
       <div class="cap-sub" style="opacity:1; transform:translateY(0);">舉起食指 Raise your index finger</div>
     </div>
 
-    <!-- Scene 5 : Step 3 Cheek (11.5s ~ 13.5s) -->
+    <!-- Scene 5 : Step 3 Cheek (11s ~ 13s) -->
     <div class="scene" id="s5">
       <div class="step-badge">STEP 3 / 4</div>
       <div class="cheek-wrap">
@@ -228,21 +228,21 @@
       <div class="cap-sub" style="opacity:1; transform:translateY(0);">輕觸臉頰 Touch your cheek</div>
     </div>
 
-    <!-- Scene 6 : Step 4 Chant (13.5s ~ 15.5s) -->
+    <!-- Scene 6 : Step 4 Chant (13s ~ 15s) -->
     <div class="scene" id="s6">
       <div class="step-badge">STEP 4 / 4</div>
       <div class="eyes">〜 〜</div>
       <div class="chant" id="chantText"></div>
     </div>
 
-    <!-- Scene 7 : Flash & Smile (15.5s ~ 17s) -->
+    <!-- Scene 7 : Flash & Smile (15s ~ 16.5s) -->
     <div class="scene" id="s7">
       <div class="flash" id="flashEl"></div>
       <div class="smile-glow"><div class="smile-path">⌣</div></div>
       <div class="cap-title" style="font-size:5.5 cqw;">DID YOU SEE THE MOST<br>BEAUTIFUL SMILE?</div>
     </div>
 
-    <!-- Scene 8 : CTA (17s ~ 19s) -->
+    <!-- Scene 8 : CTA (16.5s ~ 18.5s) -->
     <div class="scene" id="s8">
       <div class="cap-title" style="font-size:5.8 cqw;">留言你看到的畫面</div>
       <div class="cta-arrow">↓</div>
@@ -270,18 +270,17 @@
     });
   }
 
-  // 第一幕縮短為 3 秒，總長度調整為 19 秒
   const timeline = [
-    {id:'s1', start:0,  end:3},
-    {id:'s2', start:3,  end:7},
-    {id:'s3', start:7,  end:9.5},
-    {id:'s4', start:9.5, end:11.5},
-    {id:'s5', start:11.5, end:13.5},
-    {id:'s6', start:13.5, end:15.5},
-    {id:'s7', start:15.5, end:17},
-    {id:'s8', start:17, end:19}
+    {id:'s1', start:0,  end:2.5},
+    {id:'s2', start:2.5, end:6.5},
+    {id:'s3', start:6.5, end:9},
+    {id:'s4', start:9,  end:11},
+    {id:'s5', start:11, end:13},
+    {id:'s6', start:13, end:15},
+    {id:'s7', start:15, end:16.5},
+    {id:'s8', start:16.5, end:18.5}
   ];
-  const DURATION = 19;
+  const DURATION = 18.5;
   let rafId, startTime;
   
   function setScene(t){
@@ -291,13 +290,13 @@
     });
 
     const secretText = document.getElementById('secretText');
-    if (t >= 3.3 && t < 7) {
+    if (t >= 2.8 && t < 6.5) {
       secretText.classList.add('fade-in-text');
     } else {
       secretText.classList.remove('fade-in-text');
     }
 
-    document.getElementById('flashEl').classList.toggle('on', t>=15.5 && t<16.1);
+    document.getElementById('flashEl').classList.toggle('on', t>=15 && t<15.6);
   }
 
   function loop(ts){
@@ -311,6 +310,7 @@
 
   function start(){ 
     document.getElementById('startOverlay').classList.add('hide'); 
+    startTime = /^(2|3)$/.test('0') ? 0 : 0; 
     startTime = null; 
     runChant();
     cancelAnimationFrame(rafId); 
