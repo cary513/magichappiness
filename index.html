@@ -73,23 +73,23 @@
   
   .scene-2-content {
     position: absolute;
-    bottom: 2.5 cqw;
+    bottom: 6 cqw;
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 3 cqw;
     z-index: 5;
   }
 
   .cap-sub{ 
-    font-size: 4.2 cqw; 
+    font-size: 4 cqw; 
     color: var(--violet-soft); 
     font-style: italic; 
     line-height: 1.4; 
     text-shadow: 0 2px 8px rgba(0,0,0,0.9);
-    margin-top: 3.5 cqw;
     white-space: nowrap;
     opacity: 0;
     transform: translateY(1 cqw);
@@ -199,8 +199,8 @@
     <div class="scene" id="s2">
       <img src="./which_2.jpg" class="bg-which3">
       <div class="scene-2-content">
-        <button class="start-btn">START</button>
         <div class="cap-sub" id="secretText">接下來發生的事，請不要告訴別人</div>
+        <button class="start-btn">START</button>
       </div>
     </div>
 
@@ -310,7 +310,6 @@
 
   function start(){ 
     document.getElementById('startOverlay').classList.add('hide'); 
-    startTime = /^(2|3)$/.test('0') ? 0 : 0; 
     startTime = null; 
     runChant();
     cancelAnimationFrame(rafId); 
