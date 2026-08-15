@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>尋找魔法微笑 — 1080x1350 Feed 動畫預覽</title>
+<title>尋找魔法微笑 — 1080x1350 動畫預覽</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <style>
@@ -32,13 +32,13 @@
     max-height:100vh;
   }
   
-  /* ---------- 1080x1350 (4:5) Fluid Canvas ---------- */
+  /* ---------- 1080x1350 (4:5 比例精確鎖定) ---------- */
   .frame{
     position:relative;
-    /* 調整為 4:5 比例，適應桌機與手機瀏覽器高度 */
-    width: min(85vw, calc(78vh * 4 / 5), 480px);
+    /* 強制設定精確的 4:5 比例 (1080w / 1350h) */
+    width: min(72vh * (4 / 5), 440px);
     aspect-ratio: 4 / 5;
-    border-radius: 5 cqw;
+    border-radius: 4 cqw;
     overflow:hidden;
     background:radial-gradient(120% 90% at 50% 20%, var(--bg-glow) 0%, var(--bg-mid) 45%, var(--bg-deep) 100%);
     box-shadow:0 0 0 1px rgba(255,255,255,0.08), 0 30px 80px rgba(0,0,0,0.7);
@@ -55,7 +55,7 @@
   @keyframes twinkle{ 0%,100%{opacity:.25; transform:scale(1);} 50%{opacity:1; transform:scale(1.6);} }
   .moon{
     position:absolute; top:6%; left:50%; transform:translateX(-50%);
-    width:8 cqw; height:8 cqw; border-radius:50%;
+    width:7.5 cqw; height:7.5 cqw; border-radius:50%;
     box-shadow: -2 cqw 0.5 cqw 0 0 var(--bg-deep) inset;
     background:var(--cream); opacity:.5;
   }
@@ -73,7 +73,7 @@
   .scene{
     position:absolute; inset:0;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
-    text-align:center; padding:8 cqw;
+    text-align:center; padding:7 cqw;
     opacity:0; pointer-events:none;
     transition:opacity .5s ease;
   }
@@ -83,43 +83,43 @@
     font-weight:700; letter-spacing:.03em;
     text-transform:uppercase;
     color:var(--cream);
-    font-size:7.5 cqw; line-height:1.3;
+    font-size:7 cqw; line-height:1.3;
     text-shadow:0 0 24px rgba(138,126,242,0.55);
   }
   .cap-sub{
-    margin-top:3 cqw; font-size:5 cqw; color:var(--violet-soft); font-style:italic;
+    margin-top:2.5 cqw; font-size:4.5 cqw; color:var(--violet-soft); font-style:italic;
   }
   .step-badge{
-    font-family:'Playfair Display', serif; font-weight:700; font-size:4 cqw;
+    font-family:'Playfair Display', serif; font-weight:700; font-size:3.6 cqw;
     color:var(--bg-deep); background:var(--gold);
-    padding:1.2 cqw 4 cqw; border-radius:5 cqw; letter-spacing:.06em;
-    margin-bottom:4 cqw;
+    padding:1 cqw 3.5 cqw; border-radius:4 cqw; letter-spacing:.06em;
+    margin-bottom:3.5 cqw;
   }
   .chant{
-    font-family:'Playfair Display', serif; font-weight:700; font-size:8 cqw; color:var(--gold);
+    font-family:'Playfair Display', serif; font-weight:700; font-size:7.5 cqw; color:var(--gold);
     text-shadow:0 0 20px rgba(227,191,95,0.6);
     min-height:2.4em;
   }
-  .cta-arrow{ font-size:6.5 cqw; animation:bounceDown 1.1s ease-in-out infinite; color:var(--gold); margin-top:2 cqw; }
+  .cta-arrow{ font-size:6 cqw; animation:bounceDown 1.1s ease-in-out infinite; color:var(--gold); margin-top:1.5 cqw; }
   @keyframes bounceDown{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(2 cqw);} }
 
   /* silhouette (scene 1) */
-  .witch-wrap{ position:relative; width:38 cqw; height:45 cqw; margin-bottom:2 cqw; }
+  .witch-wrap{ position:relative; width:35 cqw; height:42 cqw; margin-bottom:2 cqw; }
   .hat{
     position:absolute; left:50%; top:0; transform:translateX(-50%);
     width:0; height:0;
-    border-left:11 cqw solid transparent;
-    border-right:11 cqw solid transparent;
-    border-bottom:28 cqw solid #05060c;
+    border-left:10 cqw solid transparent;
+    border-right:10 cqw solid transparent;
+    border-bottom:25 cqw solid #05060c;
     filter:drop-shadow(0 0 22px rgba(120,110,220,0.35));
     animation:sway 4s ease-in-out infinite;
   }
   .robe{
-    position:absolute; left:50%; top:24 cqw; transform:translateX(-50%);
+    position:absolute; left:50%; top:22 cqw; transform:translateX(-50%);
     width:0; height:0;
-    border-left:16 cqw solid transparent;
-    border-right:16 cqw solid transparent;
-    border-bottom:25 cqw solid #06070f;
+    border-left:14 cqw solid transparent;
+    border-right:14 cqw solid transparent;
+    border-bottom:23 cqw solid #06070f;
     filter:drop-shadow(0 0 26px rgba(120,110,220,0.3));
   }
   @keyframes sway{ 0%,100%{ transform:translateX(-50%) rotate(-1.2deg);} 50%{ transform:translateX(-50%) rotate(1.2deg);} }
@@ -133,24 +133,24 @@
 
   /* mirror (step 1) */
   .mirror{
-    width:26 cqw; height:36 cqw; border-radius:50% / 40%;
-    border:1.6 cqw solid var(--gold);
+    width:24 cqw; height:33 cqw; border-radius:50% / 40%;
+    border:1.5 cqw solid var(--gold);
     background:linear-gradient(160deg, #86c9e6, #2f5f7a);
     box-shadow:0 0 30px rgba(227,191,95,0.35), inset 0 0 20px rgba(255,255,255,0.25);
-    margin-bottom:4 cqw;
+    margin-bottom:3.5 cqw;
     animation:ripple 2.4s ease-in-out infinite;
   }
   @keyframes ripple{ 0%,100%{ filter:brightness(1);} 50%{ filter:brightness(1.25);} }
 
   /* finger (step 2) */
-  .finger-icon{ font-size:15 cqw; margin-bottom:2 cqw; filter:drop-shadow(0 0 16px rgba(227,191,95,0.5)); animation:riseFinger 1.6s ease-in-out infinite; }
+  .finger-icon{ font-size:14 cqw; margin-bottom:2 cqw; filter:drop-shadow(0 0 16px rgba(227,191,95,0.5)); animation:riseFinger 1.6s ease-in-out infinite; }
   @keyframes riseFinger{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-1.8 cqw);} }
 
   /* cheek touch (step 3) */
-  .cheek-wrap{ position:relative; width:30 cqw; height:30 cqw; margin-bottom:2 cqw; }
-  .cheek-icon{ font-size:15 cqw; }
+  .cheek-wrap{ position:relative; width:28 cqw; height:28 cqw; margin-bottom:2 cqw; }
+  .cheek-icon{ font-size:14 cqw; }
   .ring{
-    position:absolute; left:50%; top:50%; width:7 cqw; height:7 cqw;
+    position:absolute; left:50%; top:50%; width:6 cqw; height:6 cqw;
     border:0.6 cqw solid var(--violet-soft); border-radius:50%;
     transform:translate(-50%,-50%);
     animation:ringOut 2s ease-out infinite;
@@ -160,7 +160,7 @@
   @keyframes ringOut{ 0%{ opacity:.8; transform:translate(-50%,-50%) scale(0.4);} 100%{ opacity:0; transform:translate(-50%,-50%) scale(2.8);} }
 
   /* eyes / chant (step 4) */
-  .eyes{ font-size:11 cqw; letter-spacing:4.5 cqw; margin-bottom:4 cqw; opacity:.9; }
+  .eyes{ font-size:10 cqw; letter-spacing:4 cqw; margin-bottom:3.5 cqw; opacity:.9; }
 
   /* reveal flash + smile */
   .flash{
@@ -169,18 +169,18 @@
   .flash.on{ animation:flashPop .5s ease-out forwards; }
   @keyframes flashPop{ 0%{opacity:0;} 15%{opacity:1;} 100%{opacity:0;} }
   .smile-glow{
-    width:40 cqw; height:40 cqw; border-radius:50%;
+    width:36 cqw; height:36 cqw; border-radius:50%;
     background:radial-gradient(circle, rgba(180,169,255,0.55), rgba(60,60,120,0) 70%);
     display:flex; align-items:center; justify-content:center;
-    margin-bottom:4 cqw;
+    margin-bottom:3.5 cqw;
   }
-  .smile-path{ font-size:13 cqw; color:var(--gold); text-shadow:0 0 20px rgba(227,191,95,0.8); }
+  .smile-path{ font-size:12 cqw; color:var(--gold); text-shadow:0 0 20px rgba(227,191,95,0.8); }
 
   .badge-sound{
-    position:absolute; top:4 cqw; right:4 cqw; z-index:21;
-    font-size:3.5 cqw; color:var(--violet-soft);
+    position:absolute; top:3.5 cqw; right:3.5 cqw; z-index:21;
+    font-size:3.2 cqw; color:var(--violet-soft);
     background:rgba(10,14,26,0.7); border:1px solid rgba(180,169,255,0.4);
-    padding:1 cqw 2.5 cqw; border-radius:3 cqw; letter-spacing:.05em;
+    padding:0.8 cqw 2.2 cqw; border-radius:3 cqw; letter-spacing:.05em;
     opacity:0; transition:opacity .3s;
   }
   .badge-sound.show{ opacity:1; }
@@ -194,13 +194,13 @@
   }
   .overlay-btn.hide{ display:none; }
   .play-circle{
-    width:16 cqw; height:16 cqw; border-radius:50%;
+    width:15 cqw; height:15 cqw; border-radius:50%;
     border:0.4 cqw solid var(--gold); color:var(--gold);
-    display:flex; align-items:center; justify-content:center; font-size:6 cqw;
+    display:flex; align-items:center; justify-content:center; font-size:5.5 cqw;
     box-shadow:0 0 30px rgba(227,191,95,0.35);
   }
-  .overlay-btn p{ font-family:'Playfair Display',serif; font-size:4.8 cqw; color:var(--cream); margin:0; }
-  .overlay-btn small{ color:var(--violet-soft); font-size:3.8 cqw; }
+  .overlay-btn p{ font-family:'Playfair Display',serif; font-size:4.5 cqw; color:var(--cream); margin:0; }
+  .overlay-btn small{ color:var(--violet-soft); font-size:3.5 cqw; }
 
   .controls{ display:flex; gap:12px; }
   .ctrl-btn{
@@ -267,12 +267,12 @@
     <div class="scene" id="s6">
       <div class="flash" id="flashEl"></div>
       <div class="smile-glow"><div class="smile-path">⌣</div></div>
-      <div class="cap-title" style="font-size:6 cqw;">DID YOU SEE THE MOST<br>BEAUTIFUL SMILE?</div>
+      <div class="cap-title" style="font-size:5.5 cqw;">DID YOU SEE THE MOST<br>BEAUTIFUL SMILE?</div>
     </div>
 
     <!-- Scene 7 : CTA -->
     <div class="scene" id="s7">
-      <div class="cap-title" style="font-size:6.2 cqw;">留言你看到的畫面</div>
+      <div class="cap-title" style="font-size:5.8 cqw;">留言你看到的畫面</div>
       <div class="cta-arrow">↓</div>
       <div class="cap-sub">標記一位也該找到<br>魔法微笑的人 ✨</div>
     </div>
@@ -287,7 +287,7 @@
   <div class="controls">
     <button class="ctrl-btn" id="replayBtn">⟲ 重新播放</button>
   </div>
-  <p class="note">1080x1350 (4:5) Instagram 貼文規格分鏡示範。</p>
+  <p class="note">1080x1350 (4:5) Instagram 貼文版型預覽。</p>
 </div>
 
 <script>
