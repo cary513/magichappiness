@@ -44,7 +44,7 @@
     container-type: inline-size;
   }
 
-  /* 最上層邊框裝飾圖 (透明度設為 0.75) */
+  /* 最上層邊框裝飾圖 (透明度 0.75) */
   .frame-overlay {
     position: absolute;
     inset: 0;
@@ -91,6 +91,22 @@
     z-index:10;
   }
   .scene.active{ opacity:1; }
+
+  /* 背景圖慢慢浮現動畫 */
+  .fade-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+  }
+  .scene.active .fade-bg {
+    opacity: 1;
+  }
+
   .cap-title{
     font-family:'Playfair Display', serif;
     font-weight:700; letter-spacing:.03em;
@@ -219,10 +235,10 @@
     <div class="stars" id="starsLayer"></div>
     <div class="moon"></div>
 
-    <!-- Scene 1 : 0-3s Hook (使用你提供的 sh.jpg 背景插畫) -->
+    <!-- Scene 1 : 0-3s Hook (背景漸漸浮現) -->
     <div class="scene" id="s1">
-      <img src="sh.jpg" alt="Witch Background" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1;">
-      <div class="cap-title glitchtext" style="position: relative; z-index: 2; margin-top: auto; margin-bottom: 8 cqw;">ARE YOU<br>THE CHOSEN ONE?</div>
+      <img src="sh.jpg" alt="Witch Background" class="fade-bg">
+      <div class="cap-title glitchtext" style="position: relative; z-index: 2;">ARE YOU<br>THE CHOSEN ONE?</div>
     </div>
 
     <!-- Scene 2 : Step 1 mirror -->
