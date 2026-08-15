@@ -90,6 +90,7 @@
     z-index: 5;
   }
 
+  /* 逐字慢慢出現的文字特效設定 */
   .cap-sub{ 
     font-size: 3.6 cqw; 
     color: var(--violet-soft); 
@@ -98,6 +99,13 @@
     text-shadow: 0 2px 8px rgba(0,0,0,0.9);
     margin-bottom: 1.8 cqw;
     white-space: nowrap;
+    opacity: 0;
+    transform: translateY(1 cqw);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .scene.active .cap-sub.fade-in-text {
+    opacity: 1;
+    transform: translateY(0);
   }
   
   /* 跳動發光的 START 按鈕設定 */
@@ -119,6 +127,19 @@
   @keyframes pulseGlow {
     0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(227, 191, 95, 0.6); }
     50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(227, 191, 95, 0.95), 0 0 50px rgba(180, 169, 255, 0.6); }
+  }
+
+  /* Step 1 鏡子圖片樣式設定 */
+  .mirror {
+    width: 32 cqw;
+    height: 32 cqw;
+    background-image: url('./mirro.png');
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 2 cqw;
+    border-radius: 50%;
+    box-shadow: 0 0 25px rgba(138, 126, 242, 0.4);
+    border: 2px solid rgba(227, 191, 95, 0.4);
   }
 
   .chant{ font-family:'Playfair Display', serif; font-weight:700; font-size:7.5 cqw; color:var(--gold); text-shadow:0 0 20px rgba(227,191,95,0.6); min-height:2.4em; }
@@ -146,7 +167,6 @@
 <body>
 <div class="stage">
   <div class="frame" id="frame">
-    <!-- 已修正為相對路徑 ./ -->
     <img src="./frame.png" class="frame-overlay">
     <div class="progress-track"><div class="progress-fill" id="progress"></div></div>
     <div class="badge-sound" id="soundBadge">🔊 音量開啟</div>
@@ -159,45 +179,57 @@
       <div class="cap-title">ARE YOU<br>THE CHOSEN ONE?</div>
     </div>
 
-    <!-- Scene 2 : which_2.jpg -->
+    <!-- Scene 2 : which_2.jpg (停留 4 秒：5s ~ 9s) -->
     <div class="scene" id="s2">
       <img src="./which_2.jpg" class="bg-which3">
       <div class="scene-2-content">
-        <div class="cap-sub">接下來發生的事，請不要告訴別人</div>
+        <div class="cap-sub" id="secretText">接下來發生的事，請不要告訴別人</div>
         <button class="start-btn">START</button>
       </div>
     </div>
 
+    <!-- Scene 3 : Step 1 Mirror (9s ~ 11.5s) -->
     <div class="scene" id="s3">
-      <div class="step-badge" style="font-family:'Playfair Display', serif; font-weight:700; font-size:3.6 cqw; color:var(--bg-deep); background:var(--gold); padding:1 cqw 3.5 cqw; border-radius:4 cqw; letter-spacing:.06em; margin-bottom:2 cqw;">STEP 2 / 4</div>
-      <div class="finger-icon" style="font-size:14 cqw; margin-bottom:2 cqw;">☝️</div>
-      <div class="cap-sub">舉起食指 Raise your index finger</div>
+      <div class="step-badge" style="font-family:'Playfair Display', serif; font-weight:700; font-size:3.6 cqw; color:var(--bg-deep); background:var(--gold); padding:1 cqw 3.5 cqw; border-radius:4 cqw; letter-spacing:.06em; margin-bottom:2 cqw;">STEP 1 / 4</div>
+      <div class="mirror"></div>
+      <div class="cap-sub" style="opacity:1; transform:translateY(0);">站在鏡子前 Stand in front of a mirror</div>
     </div>
 
+    <!-- Scene 4 : Step 2 / 4 (11.5s ~ 13.5s) -->
     <div class="scene" id="s4">
+      <div class="step-badge" style="font-family:'Playfair Display', serif; font-weight:700; font-size:3.6 cqw; color:var(--bg-deep); background:var(--gold); padding:1 cqw 3.5 cqw; border-radius:4 cqw; letter-spacing:.06em; margin-bottom:2 cqw;">STEP 2 / 4</div>
+      <div class="finger-icon" style="font-size:14 cqw; margin-bottom:2 cqw;">☝️</div>
+      <div class="cap-sub" style="opacity:1; transform:translateY(0);">舉起食指 Raise your index finger</div>
+    </div>
+
+    <!-- Scene 5 : Step 3 / 4 (13.5s ~ 15.5s) -->
+    <div class="scene" id="s5">
       <div class="step-badge" style="font-family:'Playfair Display', serif; font-weight:700; font-size:3.6 cqw; color:var(--bg-deep); background:var(--gold); padding:1 cqw 3.5 cqw; border-radius:4 cqw; letter-spacing:.06em; margin-bottom:2 cqw;">STEP 3 / 4</div>
       <div class="cheek-wrap" style="position:relative; width:28 cqw; height:28 cqw; margin-bottom:2 cqw;">
         <div class="cheek-icon" style="font-size:14 cqw;">🫵</div>
       </div>
-      <div class="cap-sub">輕觸臉頰 Touch your cheek</div>
+      <div class="cap-sub" style="opacity:1; transform:translateY(0);">輕觸臉頰 Touch your cheek</div>
     </div>
 
-    <div class="scene" id="s5">
+    <!-- Scene 6 : Step 4 / 4 (15.5s ~ 17.5s) -->
+    <div class="scene" id="s6">
       <div class="step-badge" style="font-family:'Playfair Display', serif; font-weight:700; font-size:3.6 cqw; color:var(--bg-deep); background:var(--gold); padding:1 cqw 3.5 cqw; border-radius:4 cqw; letter-spacing:.06em; margin-bottom:2 cqw;">STEP 4 / 4</div>
       <div class="eyes">〜 〜</div>
       <div class="chant" id="chantText"></div>
     </div>
 
-    <div class="scene" id="s6">
+    <!-- Scene 7 : Flash & Smile (17.5s ~ 19s) -->
+    <div class="scene" id="s7">
       <div class="flash" id="flashEl"></div>
       <div class="smile-glow"><div class="smile-path">⌣</div></div>
       <div class="cap-title" style="font-size:5.5 cqw;">DID YOU SEE THE MOST<br>BEAUTIFUL SMILE?</div>
     </div>
 
-    <div class="scene" id="s7">
+    <!-- Scene 8 : CTA (19s ~ 21s) -->
+    <div class="scene" id="s8">
       <div class="cap-title" style="font-size:5.8 cqw;">留言你看到的畫面</div>
       <div class="cta-arrow">↓</div>
-      <div class="cap-sub">標記一位也該找到<br>魔法微笑的人 ✨</div>
+      <div class="cap-sub" style="opacity:1; transform:translateY(0);">標記一位也該找到<br>魔法微笑的人 ✨</div>
     </div>
 
     <div class="overlay-btn" id="startOverlay">
@@ -209,16 +241,18 @@
 </div>
 
 <script>
+  // 重新分配的時間軸設定（總長度 21 秒，第二張 s2 停留 4 秒：從 5s 到 9s）
   const timeline = [
     {id:'s1', start:0,  end:5},
-    {id:'s2', start:5,  end:10},
-    {id:'s3', start:10, end:12},
-    {id:'s4', start:12, end:14},
-    {id:'s5', start:14, end:16},
-    {id:'s6', start:16, end:17.5},
-    {id:'s7', start:17.5,end:19}
+    {id:'s2', start:5,  end:9},
+    {id:'s3', start:9,  end:11.5},
+    {id:'s4', start:11.5, end:13.5},
+    {id:'s5', start:13.5, end:15.5},
+    {id:'s6', start:15.5, end:17.5},
+    {id:'s7', start:17.5, end:19},
+    {id:'s8', start:19, end:21}
   ];
-  const DURATION = 19;
+  const DURATION = 21;
   let rafId, startTime;
   
   function setScene(t){
@@ -231,7 +265,15 @@
     s1El.classList.toggle('reveal-face', t >= 3.0 && t < 5);
     s1El.classList.toggle('fade-title', t >= 4.0 && t < 5);
 
-    document.getElementById('flashEl').classList.toggle('on', t>=16 && t<16.6);
+    // 控制 Scene 2 的文字在進入場景後 0.3 秒開始慢慢浮現
+    const secretText = document.getElementById('secretText');
+    if (t >= 5.3 && t < 9) {
+      secretText.classList.add('fade-in-text');
+    } else {
+      secretText.classList.remove('fade-in-text');
+    }
+
+    document.getElementById('flashEl').classList.toggle('on', t>=17.5 && t<18.1);
   }
 
   function loop(ts){
