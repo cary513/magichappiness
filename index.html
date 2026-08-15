@@ -120,7 +120,6 @@
     50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(227, 191, 95, 0.95), 0 0 50px rgba(180, 169, 255, 0.6); }
   }
 
-  /* 整合後的步驟 1~4 樣式設計 */
   .step-badge{
     font-family:'Playfair Display', serif; font-weight:700; font-size:3.2 cqw;
     color:var(--bg-deep); background:var(--gold);
@@ -128,7 +127,6 @@
     margin-bottom:2 cqw;
   }
 
-  /* Step 1: 鏡子設計 */
   .mirror {
     width: 26 cqw;
     height: 34 cqw;
@@ -143,11 +141,9 @@
   }
   @keyframes ripple{ 0%,100%{ filter:brightness(1);} 50%{ filter:brightness(1.25);} }
 
-  /* Step 2: 食指設計 */
   .finger-icon{ font-size: 11 cqw; margin-bottom: 2 cqw; filter: drop-shadow(0 0 14px rgba(227,191,95,0.5)); animation: riseFinger 1.6s ease-in-out infinite; }
   @keyframes riseFinger{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-1.5 cqw);} }
 
-  /* Step 3: 臉頰觸碰波紋設計 */
   .cheek-wrap{ position:relative; width:22 cqw; height:22 cqw; margin-bottom:2 cqw; display:flex; align-items:center; justify-content:center; }
   .cheek-icon{ font-size: 10 cqw; z-index: 2; }
   .ring{
@@ -160,7 +156,6 @@
   .ring.d3{ animation-delay:1.2s; }
   @keyframes ringOut{ 0%{ opacity:.8; transform:translate(-50%,-50%) scale(0.4);} 100%{ opacity:0; transform:translate(-50%,-50%) scale(2.6);} }
 
-  /* Step 4: 眼睛與動態咒語 */
   .eyes{ font-size:8 cqw; letter-spacing:3 cqw; margin-bottom:2.5 cqw; opacity:.9; }
   .chant{ font-family:'Playfair Display', serif; font-weight:700; font-size:6 cqw; color:var(--gold); text-shadow:0 0 20px rgba(227,191,95,0.6); min-height:2.4em; }
   
@@ -194,13 +189,13 @@
     <div class="stars" id="starsLayer"></div>
     <div class="moon"></div>
 
-    <!-- Scene 1 : 0-5s Hook -->
+    <!-- Scene 1 : 0-3s Hook -->
     <div class="scene" id="s1">
       <img src="./sh.jpg" class="bg-silhouette">
       <div class="cap-title">ARE YOU<br>THE CHOSEN ONE?</div>
     </div>
 
-    <!-- Scene 2 : which_2.jpg (停留 4 秒：5s ~ 9s) -->
+    <!-- Scene 2 : which_2.jpg (停留 4 秒：3s ~ 7s) -->
     <div class="scene" id="s2">
       <img src="./which_2.jpg" class="bg-which3">
       <div class="scene-2-content">
@@ -209,21 +204,21 @@
       </div>
     </div>
 
-    <!-- Scene 3 : Step 1 Mirror (9s ~ 11.5s) -->
+    <!-- Scene 3 : Step 1 Mirror (7s ~ 9.5s) -->
     <div class="scene" id="s3">
       <div class="step-badge">STEP 1 / 4</div>
       <div class="mirror"></div>
       <div class="cap-sub" style="opacity:1; transform:translateY(0);">站在鏡子前 Stand in front of a mirror</div>
     </div>
 
-    <!-- Scene 4 : Step 2 Finger (11.5s ~ 13.5s) -->
+    <!-- Scene 4 : Step 2 Finger (9.5s ~ 11.5s) -->
     <div class="scene" id="s4">
       <div class="step-badge">STEP 2 / 4</div>
       <div class="finger-icon">☝️</div>
       <div class="cap-sub" style="opacity:1; transform:translateY(0);">舉起食指 Raise your index finger</div>
     </div>
 
-    <!-- Scene 5 : Step 3 Cheek (13.5s ~ 15.5s) -->
+    <!-- Scene 5 : Step 3 Cheek (11.5s ~ 13.5s) -->
     <div class="scene" id="s5">
       <div class="step-badge">STEP 3 / 4</div>
       <div class="cheek-wrap">
@@ -233,21 +228,21 @@
       <div class="cap-sub" style="opacity:1; transform:translateY(0);">輕觸臉頰 Touch your cheek</div>
     </div>
 
-    <!-- Scene 6 : Step 4 Chant (15.5s ~ 17.5s) -->
+    <!-- Scene 6 : Step 4 Chant (13.5s ~ 15.5s) -->
     <div class="scene" id="s6">
       <div class="step-badge">STEP 4 / 4</div>
       <div class="eyes">〜 〜</div>
       <div class="chant" id="chantText"></div>
     </div>
 
-    <!-- Scene 7 : Flash & Smile (17.5s ~ 19s) -->
+    <!-- Scene 7 : Flash & Smile (15.5s ~ 17s) -->
     <div class="scene" id="s7">
       <div class="flash" id="flashEl"></div>
       <div class="smile-glow"><div class="smile-path">⌣</div></div>
       <div class="cap-title" style="font-size:5.5 cqw;">DID YOU SEE THE MOST<br>BEAUTIFUL SMILE?</div>
     </div>
 
-    <!-- Scene 8 : CTA (19s ~ 21s) -->
+    <!-- Scene 8 : CTA (17s ~ 19s) -->
     <div class="scene" id="s8">
       <div class="cap-title" style="font-size:5.8 cqw;">留言你看到的畫面</div>
       <div class="cta-arrow">↓</div>
@@ -263,7 +258,6 @@
 </div>
 
 <script>
-  // 建立動態咒語逐字顯示特效
   const chantWords = "Hee-hee-ha-ha-ha-ha-ha".split('-');
   let chantTimers = [];
   function runChant(){
@@ -276,17 +270,18 @@
     });
   }
 
+  // 第一幕縮短為 3 秒，總長度調整為 19 秒
   const timeline = [
-    {id:'s1', start:0,  end:5},
-    {id:'s2', start:5,  end:9},
-    {id:'s3', start:9,  end:11.5},
-    {id:'s4', start:11.5, end:13.5},
-    {id:'s5', start:13.5, end:15.5},
-    {id:'s6', start:15.5, end:17.5},
-    {id:'s7', start:17.5, end:19},
-    {id:'s8', start:19, end:21}
+    {id:'s1', start:0,  end:3},
+    {id:'s2', start:3,  end:7},
+    {id:'s3', start:7,  end:9.5},
+    {id:'s4', start:9.5, end:11.5},
+    {id:'s5', start:11.5, end:13.5},
+    {id:'s6', start:13.5, end:15.5},
+    {id:'s7', start:15.5, end:17},
+    {id:'s8', start:17, end:19}
   ];
-  const DURATION = 21;
+  const DURATION = 19;
   let rafId, startTime;
   
   function setScene(t){
@@ -295,15 +290,14 @@
       el.classList.toggle('active', t >= seg.start && t < seg.end);
     });
 
-    // 控制 Scene 2 的文字緩緩浮現
     const secretText = document.getElementById('secretText');
-    if (t >= 5.3 && t < 9) {
+    if (t >= 3.3 && t < 7) {
       secretText.classList.add('fade-in-text');
     } else {
       secretText.classList.remove('fade-in-text');
     }
 
-    document.getElementById('flashEl').classList.toggle('on', t>=17.5 && t<18.1);
+    document.getElementById('flashEl').classList.toggle('on', t>=15.5 && t<16.1);
   }
 
   function loop(ts){
