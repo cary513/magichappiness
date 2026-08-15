@@ -15,6 +15,7 @@
     --violet-soft:#b4a9ff;
     --gold:#e3bf5f;
     --cream:#f3efe3;
+    --mist:#3f5c8f;
   }
   *{box-sizing:border-box;}
   html,body{
@@ -45,8 +46,14 @@
   @keyframes twinkle{ 0%,100%{opacity:.25; transform:scale(1);} 50%{opacity:1; transform:scale(1.6);} }
   .moon{ position:absolute; top:6%; left:50%; transform:translateX(-50%); width:7.5 cqw; height:7.5 cqw; border-radius:50%; box-shadow: -2 cqw 0.5 cqw 0 0 var(--bg-deep) inset; background:var(--cream); opacity:.5; }
 
-  .progress-track{ position:absolute; top:3 cqw; left:3 cqw; right:3 cqw; height:1 cqw; background:rgba(255,255,255,0.12); border-radius:1 cqw; overflow:hidden; z-index:26; }
-  .progress-fill{ height:100%; width:0%; background:linear-gradient(90deg, var(--violet), var(--gold)); }
+  /* ---------- progress bar ---------- */
+  .progress-track{
+    position:absolute; top:10px; left:10px; right:10px; height:3px;
+    background:rgba(255,255,255,0.12); border-radius:2px; overflow:hidden; z-index:20;
+  }
+  .progress-fill{
+    height:100%; width:0%; background:linear-gradient(90deg, var(--violet), var(--gold));
+  }
 
   .scene{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:7 cqw; opacity:0; pointer-events:none; transition:opacity .5s ease; z-index:10; }
   .scene.active{ opacity:1; }
