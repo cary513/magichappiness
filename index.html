@@ -330,15 +330,15 @@
       </div>
     </div>
 
-    <!-- Scene 6 : Step 4 Chant (13s ~ 15s) -->
+    <!-- Scene 6 : Step 4 Chant (13s ~ 15s) - 已改為中文逐字呈現 -->
     <div class="scene" id="s6">
       <div class="step-scene">
         <div class="step-badge">STEP 4 / 4</div>
         <div class="step-graphic-area" style="flex-direction:column; gap:2 cqw;">
-          <div class="eyes">〜 〜</div>
+          <div class="eyes">◡ ◡</div>
           <div class="chant" id="chantText"></div>
         </div>
-        <div class="step-text" style="opacity:0;">Placeholder</div>
+        <div class="step-text">閉上雙眼念咒語 Close your eyes and chant</div>
       </div>
     </div>
 
@@ -365,7 +365,8 @@
 </div>
 
 <script>
-  const chantWords = "Hee-hee-ha-ha-ha-ha-ha".split('-');
+  // 修改 JavaScript 陣列改為中文字元，讓計時器逐字印出「嘻嘻哈哈哈哈哈哈」
+  const chantWords = "嘻嘻哈哈哈哈哈哈".split('');
   let chantTimers = [];
   function runChant(){
     const el = document.getElementById('chantText');
@@ -373,7 +374,7 @@
     el.textContent = '';
     chantTimers.forEach(clearTimeout); chantTimers=[];
     chantWords.forEach((w,i)=>{
-      chantTimers.push(setTimeout(()=>{ el.textContent += (i>0?'-':'') + w; }, i*200));
+      chantTimers.push(setTimeout(()=>{ el.textContent += w; }, i*150));
     });
   }
 
