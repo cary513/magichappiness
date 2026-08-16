@@ -53,18 +53,39 @@
   .scene{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:7 cqw; opacity:0; pointer-events:none; transition:opacity .5s ease; z-index:10; }
   .scene.active{ opacity:1; }
 
-  /* Scene 1 : 快速淡出 + 緩慢放大 */
+/* Scene 1 底圖：2秒動畫，最後0.3秒淡出 */
   .bg-silhouette { 
-    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; opacity: 0; 
-    transition: opacity 0.2s ease-in; 
+    position: absolute; 
+    inset: 0; 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    z-index: 1; 
+    opacity: 0; 
     transform: scale(1);
   }
-  .scene.active .bg-silhouette { opacity: 1; animation: slowZoom 2.5s ease-out forwards; }
-  @keyframes slowZoom { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
 
-  .cap-title{ 
-    font-family:'Playfair Display', serif; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:var(--cream); 
-    font-size:7 cqw; line-height:1.3; text-shadow:0 0 24px rgba(138,126,242,0.55); position: relative; z-index: 3;
+  .scene.active .bg-silhouette { 
+    /* 將動畫時間設定為 2.0 秒 */
+    animation: zoomAndFade 2.0s ease-in-out forwards;
+  }
+
+  @keyframes zoomAndFade {
+    0% { 
+      opacity: 0; 
+      transform: scale(1); 
+    }
+    10% { 
+      opacity: 1; /* 極短時間內淡入 */
+    }
+    85% { 
+      opacity: 1; 
+      transform: scale(1.1); /* 在 1.7 秒時放大到 1.1 倍 */
+    }
+    100% { 
+      opacity: 0; /* 最後 0.3 秒執行淡出 */
+      transform: scale(1.12); /* 微微繼續放大 */
+    }
   }
 
   /* Scene 2 : 快速拉入 */
