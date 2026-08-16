@@ -204,7 +204,10 @@
     <div class="scene" id="s3"><div class="step-scene"><div class="step-badge">STEP 1 / 4</div><div class="step-graphic-area"><div class="mirror"></div></div><div class="step-text">站在鏡子前 Stand in front of a mirror</div></div></div>
     <div class="scene" id="s4"><div class="step-scene"><div class="step-badge">STEP 2 / 4</div><div class="step-graphic-area"><div class="finger-icon">☝️</div></div><div class="step-text">舉起食指 Raise your index finger</div></div></div>
     <div class="scene" id="s5"><div class="step-scene"><div class="step-badge">STEP 3 / 4</div><div class="step-graphic-area"><div class="cheek-wrap"><div class="ring"></div><div class="ring d2"></div><div class="ring d3"></div><div class="cheek-icon">🫵</div></div></div><div class="step-text">輕觸臉頰 Touch your cheek</div></div></div>
-    <div class="scene" id="s6"><div class="step-scene"><div class="step-badge">STEP 4 / 4</div><div class="step-graphic-area" style="flex-direction:column; gap:2 cqw;"><div class="eyes">◡ ◡</div><div class="step-text">閉上雙眼念咒語 Close your eyes and chant</div></div><div class="chant" id="chantText"></div></div></div>
+    <div class="scene" id="s6"><div class="step-scene"><div class="step-badge">STEP 4 / 4</div><div class="step-graphic-area" style="flex-direction:column; gap:2 cqw;"><div class="eyes">◡ ◡</div><div class="step-text">閉上雙眼念咒語 Close your eyes and chant</div></div><div class="chant" id="chantText"></div><div class="reveal-box">
+      <p class="reveal-text">咒語念完之後——<br>慢慢睜開，有手指碰著的那一邊眼睛</p>
+      <p class="warning-text">記住，這一步決定一切。</p>
+    </div></div></div>
     <div class="scene" id="s7"><div class="flash" id="flashEl"></div><div class="smile-glow"><div class="smile-path">⌣</div></div><div class="cap-title" style="font-size:5.5 cqw;">DID YOU SEE THE MOST<br>BEAUTIFUL SMILE?</div></div>
     <div class="scene" id="s8"><div class="cap-title" style="font-size:5.8 cqw;">留言你看到的畫面</div><div class="cta-arrow">↓</div><div class="cap-sub" style="opacity:1; transform:translateY(0);">標記一位也該找到<br>魔法微笑的人 ✨</div></div>
 
@@ -224,8 +227,8 @@
     chantWords.forEach((w,i)=>{ chantTimers.push(setTimeout(()=>{ el.textContent += w; }, i*150)); });
   }
 
-  const timeline = [{id:'s1', start:0, end:2}, {id:'s2', start:2, end:6}, {id:'s3', start:6, end:9}, {id:'s4', start:9, end:11}, {id:'s5', start:11, end:13}, {id:'s6', start:13, end:15}, {id:'s7', start:15, end:16.5}, {id:'s8', start:16.5, end:18.5}];
-  const DURATION = 18.5;
+  const timeline = [{id:'s1', start:0, end:2}, {id:'s2', start:2, end:6}, {id:'s3', start:6, end:9}, {id:'s4', start:9, end:11}, {id:'s5', start:11, end:13}, {id:'s6', start:13, end:18}, {id:'s7', start:18, end:20.5}, {id:'s8', start:20.5, end:22.5}];
+  const DURATION = 22.5;
   let rafId, startTime;
   
   function setScene(t){
