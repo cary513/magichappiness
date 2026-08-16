@@ -1,4 +1,80 @@
-/* Scene 1 底圖：加入緩慢放大動畫 */
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>尋找魔法微笑 — 1080x1350 動畫預覽</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#080b16;
+    --bg-mid:#101a30;
+    --bg-glow:#1c2c4e;
+    --violet:#8a7ef2;
+    --violet-soft:#b4a9ff;
+    --gold:#e3bf5f;
+    --cream:#f3efe3;
+    --mist:#3f5c8f;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0; height:100%;
+    background:#05070d;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Cormorant Garamond', serif;
+    color:var(--cream);
+    overflow:hidden;
+  }
+  .stage{ display:flex; flex-direction:column; align-items:center; gap:16px; padding:16px; max-height:100vh; }
+  
+  .frame{
+    position:relative;
+    width: min(72vh * (4 / 5), 440px);
+    aspect-ratio: 4 / 5;
+    border-radius: 4 cqw;
+    overflow:hidden;
+    background:radial-gradient(120% 90% at 50% 20%, var(--bg-glow) 0%, var(--bg-mid) 45%, var(--bg-deep) 100%);
+    box-shadow:0 0 0 1px rgba(255,255,255,0.08), 0 30px 80px rgba(0,0,0,0.7);
+    container-type: inline-size;
+  }
+
+  .frame-overlay { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 25; pointer-events: none; opacity: 0.75; mix-blend-mode: screen; }
+
+  .stars{ position:absolute; inset:0; opacity:0.55; }
+  .stars span{ position:absolute; width:0.9 cqw; height:0.9 cqw; background:var(--violet-soft); border-radius:50%; filter:blur(0.3px); animation:twinkle 3.2s ease-in-out infinite; }
+  @keyframes twinkle{ 0%,100%{opacity:.25; transform:scale(1);} 50%{opacity:1; transform:scale(1.6);} }
+  .moon{ position:absolute; top:6%; left:50%; transform:translateX(-50%); width:7.5 cqw; height:7.5 cqw; border-radius:50%; box-shadow: -2 cqw 0.5 cqw 0 0 var(--bg-deep) inset; background:var(--cream); opacity:.5; }
+
+  /* ---------- progress bar ---------- */
+  .progress-track{
+    position:absolute; top:10px; left:10px; right:10px; height:3px;
+    background:rgba(255,255,255,0.12); border-radius:2px; overflow:hidden; z-index:20;
+  }
+  .progress-fill{
+    height:100%; width:0%; background:linear-gradient(90deg, var(--violet), var(--gold));
+  }
+
+  .scene{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:7 cqw; opacity:0; pointer-events:none; transition:opacity .5s ease; z-index:10; }
+  .scene.active{ opacity:1; }
+
+  /* Scene 1 底圖 */
+  .bg-silhouette { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; opacity: 0; transition: opacity 1s ease-in-out; }
+  .scene.active .bg-silhouette { opacity: 1; }
+
+  .cap-title{ 
+    font-family:'Playfair Display', serif; 
+    font-weight:700; 
+    letter-spacing:.03em; 
+    text-transform:uppercase; 
+    color:var(--cream); 
+    font-size:7 cqw; 
+    line-height:1.3; 
+    text-shadow:0 0 24px rgba(138,126,242,0.55);
+    position: relative; 
+    z-index: 3;
+  }
+  /* Scene 1 底圖：加入緩慢放大動畫 */
   .bg-silhouette { 
     position: absolute; 
     inset: 0; 
@@ -22,3 +98,372 @@
     0% { transform: scale(1); }
     100% { transform: scale(1.15); } /* 放大到 1.15 倍 */
   }
+
+  /* Scene 2 背景圖片與底部往上浮現特效 */
+  .bg-which3 { 
+    position: absolute; 
+    inset: 0; 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    z-index: 1; 
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .scene.active .bg-which3 {
+    clip-path: inset(0% 0 0 0);
+  }
+  
+  .scene-2-content {
+    position: absolute;
+    bottom: 6 cqw;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3 cqw;
+    z-index: 5;
+    opacity: 0;
+    transform: translate(-50%, 3 cqw);
+    transition: opacity 0.8s ease 0.4s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
+  }
+  .scene.active .scene-2-content {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  .cap-sub{ 
+    font-size: 4 cqw; 
+    color: var(--violet-soft); 
+    font-style: italic; 
+    line-height: 1.4; 
+    text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(1 cqw);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .scene.active .cap-sub.fade-in-text {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .start-btn {
+    display: inline-block;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 3.8 cqw;
+    letter-spacing: 0.12em;
+    color: var(--bg-deep);
+    background: linear-gradient(135deg, var(--gold), #fff2cc);
+    border: none;
+    padding: 1.4 cqw 4.8 cqw;
+    border-radius: 5 cqw;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(227, 191, 95, 0.7), inset 0 0 10px rgba(255, 255, 255, 0.9);
+    animation: pulseGlow 1.4s ease-in-out infinite;
+  }
+  @keyframes pulseGlow {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(227, 191, 95, 0.6); }
+    50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(227, 191, 95, 0.95), 0 0 50px rgba(180, 169, 255, 0.6); }
+  }
+
+  /* 各步驟版面：嚴格控制間距與物件佔比，防止換行並維持完美視覺平衡 */
+  .step-scene {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding-top: 4 cqw;
+  }
+  
+  /* 步驟說明文字改為與 Scene 2 相同的紫色 (`var(--violet-soft)`) */
+  .step-text{
+    margin-top: 10px;
+    font-size: 1.05rem;
+    color: var(--violet-soft);
+    font-style: italic;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+  }
+
+  /* STEP 資訊標籤發光效果 */
+  .step-badge{
+    font-family:'Playfair Display', serif; font-weight:700; font-size:0.85rem;
+    color:var(--bg-deep); background:var(--gold);
+    padding:4px 12px; border-radius:20px; letter-spacing:.06em;
+    margin-bottom:14px;
+    box-shadow: 0 0 12px rgba(227,191,95,0.6), 0 0 25px rgba(227,191,95,0.3);
+    animation: badgeGlow 1.8s ease-in-out infinite;
+  }
+  @keyframes badgeGlow {
+    0%, 100% { box-shadow: 0 0 10px rgba(227,191,95,0.5), 0 0 20px rgba(227,191,95,0.2); }
+    50% { box-shadow: 0 0 18px rgba(227,191,95,0.9), 0 0 35px rgba(180,169,255,0.5); }
+  }
+
+  .chant{
+    font-family:'Playfair Display', serif; font-weight:700; font-size:1.7rem; color:var(--gold);
+    text-shadow:0 0 16px rgba(227,191,95,0.6);
+    min-height:2.4em;
+  }
+  .cta-arrow{ font-size:1.4rem; animation:bounceDown 1.1s ease-in-out infinite; color:var(--gold); }
+  @keyframes bounceDown{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(8px);} }
+
+  .step-graphic-area {
+    height: 34 cqw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 7 cqw;
+    flex-shrink: 0;
+  }
+  .robe{
+    position:absolute; left:50%; top:78px; transform:translateX(-50%);
+    width:0; height:0;
+    border-left:52px solid transparent;
+    border-right:52px solid transparent;
+    border-bottom:92px solid #06070f;
+    filter:drop-shadow(0 0 26px rgba(120,110,220,0.3));
+  }
+  @keyframes sway{ 0%,100%{ transform:translateX(-50%) rotate(-1.2deg);} 50%{ transform:translateX(-50%) rotate(1.2deg);} }
+  .glitchtext{ animation:glitch 2.6s ease-in-out infinite; }
+  @keyframes glitch{
+    0%,90%,100%{ transform:translate(0,0); }
+    92%{ transform:translate(-1.5px,0.5px); }
+    94%{ transform:translate(1.5px,-0.5px); }
+    96%{ transform:translate(-1px,0); }
+  }
+
+  /* mirror (step 1) */
+  .mirror{
+    width:80px; height:110px; border-radius:50% / 40%;
+    border:6px solid var(--gold);
+    background:linear-gradient(160deg, #86c9e6, #2f5f7a);
+    box-shadow:0 0 24px rgba(227,191,95,0.35), inset 0 0 20px rgba(255,255,255,0.25);
+    margin-bottom:16px;
+    animation:ripple 2.4s ease-in-out infinite;
+  }
+  @keyframes ripple{ 0%,100%{ filter:brightness(1);} 50%{ filter:brightness(1.25);} }
+
+  /* finger (step 2) */
+  .finger-icon{ font-size:3rem; margin-bottom:10px; filter:drop-shadow(0 0 14px rgba(227,191,95,0.5)); animation:riseFinger 1.6s ease-in-out infinite; }
+  @keyframes riseFinger{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-6px);} }
+
+  /* cheek touch (step 3) */
+  .cheek-wrap{ position:relative; width:100px; height:100px; margin-bottom:10px; }
+  .cheek-icon{ font-size:3rem; }
+  .ring{
+    position:absolute; left:50%; top:50%; width:20px; height:20px;
+    border:2px solid var(--violet-soft); border-radius:50%;
+    transform:translate(-50%,-50%);
+    animation:ringOut 2s ease-out infinite;
+  }
+  .ring.d2{ animation-delay:.6s; }
+  .ring.d3{ animation-delay:1.2s; }
+  @keyframes ringOut{ 0%{ opacity:.8; transform:translate(-50%,-50%) scale(0.4);} 100%{ opacity:0; transform:translate(-50%,-50%) scale(2.6);} }
+
+  /* eyes / chant (step 4) */
+  .eyes{ font-size:2.2rem; letter-spacing:14px; margin-bottom:14px; opacity:.9; }
+
+  /* reveal flash + smile */
+  .flash{
+    position:absolute; inset:0; background:#fff; opacity:0;
+  }
+  .flash.on{ animation:flashPop .5s ease-out forwards; }
+  @keyframes flashPop{ 0%{opacity:0;} 15%{opacity:1;} 100%{opacity:0;} }
+  .smile-glow{
+    width:130px; height:130px; border-radius:50%;
+    background:radial-gradient(circle, rgba(180,169,255,0.55), rgba(60,60,120,0) 70%);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:14px;
+  }
+  .smile-path{ font-size:2.6rem; color:var(--gold); text-shadow:0 0 20px rgba(227,191,95,0.8); }
+
+  .badge-sound{ position:absolute; top:3.5 cqw; right:3.5 cqw; z-index:26; font-size:3.2 cqw; color:var(--violet-soft); background:rgba(10,14,26,0.7); border:1px solid rgba(180,169,255,0.4); padding:0.8 cqw 2.2 cqw; border-radius:3 cqw; opacity:0; transition:opacity .3s; }
+  .badge-sound.show{ opacity:1; }
+
+  /* overlay play button */
+  .overlay-btn{
+    position:absolute; inset:0; z-index:30;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+    background:rgba(5,7,13,0.72); cursor:pointer;
+    text-align:center; padding:20px;
+  }
+  .overlay-btn.hide{ display:none; }
+  .play-circle{
+    width:58px; height:58px; border-radius:50%;
+    border:1.5px solid var(--gold); color:var(--gold);
+    display:flex; align-items:center; justify-content:center; font-size:1.4rem;
+    box-shadow:0 0 26px rgba(227,191,95,0.35);
+  }
+  .overlay-btn p{ font-family:'Playfair Display',serif; font-size:0.95rem; color:var(--cream); margin:0; }
+  .overlay-btn small{ color:var(--violet-soft); font-size:0.78rem; }
+
+  .controls{ display:flex; gap:10px; }
+  .ctrl-btn{
+    font-family:'Cormorant Garamond', serif; font-size:0.95rem;
+    background:transparent; border:1px solid rgba(180,169,255,0.5); color:var(--violet-soft);
+    padding:8px 18px; border-radius:20px; cursor:pointer; letter-spacing:.04em;
+    transition:background .2s, color .2s;
+  }
+  .ctrl-btn:hover{ background:rgba(180,169,255,0.15); color:var(--cream); }
+  .note{ max-width:340px; text-align:center; font-size:0.85rem; color:#8b93ad; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="frame" id="frame">
+    <img src="./frame.png" class="frame-overlay">
+    <div class="progress-track"><div class="progress-fill" id="progress"></div></div>
+    <div class="badge-sound" id="soundBadge">🔊 音量開啟</div>
+    <div class="stars" id="starsLayer"></div>
+    <div class="moon"></div>
+
+    <!-- Scene 1 : 0-2.5s Hook -->
+    <div class="scene" id="s1">
+      <img src="./sh.jpg" class="bg-silhouette">
+      <div class="cap-title">ARE YOU<br>THE CHOSEN ONE?</div>
+    </div>
+
+    <!-- Scene 2 : which_2.jpg (停留 4 秒：2.5s ~ 6.5s) 底部往上浮現 -->
+    <div class="scene" id="s2">
+      <img src="./which_2.jpg" class="bg-which3">
+      <div class="scene-2-content">
+        <div class="cap-sub" id="secretText">接下來發生的事，請不要告訴別人</div>
+        <button class="start-btn">START</button>
+      </div>
+    </div>
+
+    <!-- Scene 3 : Step 1 Mirror (6.5s ~ 9s) -->
+    <div class="scene" id="s3">
+      <div class="step-scene">
+        <div class="step-badge">STEP 1 / 4</div>
+        <div class="step-graphic-area"><div class="mirror"></div></div>
+        <div class="step-text">站在鏡子前 Stand in front of a mirror</div>
+      </div>
+    </div>
+
+    <!-- Scene 4 : Step 2 Finger (9s ~ 11s) -->
+    <div class="scene" id="s4">
+      <div class="step-scene">
+        <div class="step-badge">STEP 2 / 4</div>
+        <div class="step-graphic-area"><div class="finger-icon">☝️</div></div>
+        <div class="step-text">舉起食指 Raise your index finger</div>
+      </div>
+    </div>
+
+    <!-- Scene 5 : Step 3 Cheek (11s ~ 13s) -->
+    <div class="scene" id="s5">
+      <div class="step-scene">
+        <div class="step-badge">STEP 3 / 4</div>
+        <div class="step-graphic-area">
+          <div class="cheek-wrap">
+            <div class="ring"></div><div class="ring d2"></div><div class="ring d3"></div>
+            <div class="cheek-icon">🫵</div>
+          </div>
+        </div>
+        <div class="step-text">輕觸臉頰 Touch your cheek</div>
+      </div>
+    </div>
+
+    <!-- Scene 6 : Step 4 Chant (13s ~ 15s) - 已改為中文逐字呈現 -->
+    <div class="scene" id="s6">
+      <div class="step-scene">
+        <div class="step-badge">STEP 4 / 4</div>
+        <div class="step-graphic-area" style="flex-direction:column; gap:2 cqw;">
+          <div class="eyes">◡ ◡</div>
+          <div class="chant" id="chantText"></div>
+        </div>
+        <div class="step-text">閉上雙眼念咒語 Close your eyes and chant</div>
+      </div>
+    </div>
+
+    <!-- Scene 7 : Flash & Smile (15s ~ 16.5s) -->
+    <div class="scene" id="s7">
+      <div class="flash" id="flashEl"></div>
+      <div class="smile-glow"><div class="smile-path">⌣</div></div>
+      <div class="cap-title" style="font-size:5.5 cqw;">DID YOU SEE THE MOST<br>BEAUTIFUL SMILE?</div>
+    </div>
+
+    <!-- Scene 8 : CTA (16.5s ~ 18.5s) -->
+    <div class="scene" id="s8">
+      <div class="cap-title" style="font-size:5.8 cqw;">留言你看到的畫面</div>
+      <div class="cta-arrow">↓</div>
+      <div class="cap-sub" style="opacity:1; transform:translateY(0);">標記一位也該找到<br>魔法微笑的人 ✨</div>
+    </div>
+
+    <div class="overlay-btn" id="startOverlay">
+      <div class="play-circle">▶</div>
+      <p>播放動畫預覽</p>
+    </div>
+  </div>
+  <div class="controls"><button class="ctrl-btn" id="replayBtn">⟲ 重新播放</button></div>
+</div>
+
+<script>
+  const chantWords = "嘻嘻哈哈哈哈哈哈".split('');
+  let chantTimers = [];
+  function runChant(){
+    const el = document.getElementById('chantText');
+    if(!el) return;
+    el.textContent = '';
+    chantTimers.forEach(clearTimeout); chantTimers=[];
+    chantWords.forEach((w,i)=>{
+      chantTimers.push(setTimeout(()=>{ el.textContent += w; }, i*150));
+    });
+  }
+
+  const timeline = [
+    {id:'s1', start:0,  end:2.5},
+    {id:'s2', start:2.5, end:6.5},
+    {id:'s3', start:6.5, end:9},
+    {id:'s4', start:9,  end:11},
+    {id:'s5', start:11, end:13},
+    {id:'s6', start:13, end:15},
+    {id:'s7', start:15, end:16.5},
+    {id:'s8', start:16.5, end:18.5}
+  ];
+  const DURATION = 18.5;
+  let rafId, startTime;
+  
+  function setScene(t){
+    timeline.forEach(seg=>{
+      const el = document.getElementById(seg.id);
+      el.classList.toggle('active', t >= seg.start && t < seg.end);
+    });
+
+    const secretText = document.getElementById('secretText');
+    if (t >= 2.8 && t < 6.5) {
+      secretText.classList.add('fade-in-text');
+    } else {
+      secretText.classList.remove('fade-in-text');
+    }
+
+    document.getElementById('flashEl').classList.toggle('on', t>=15 && t<15.6);
+  }
+
+  function loop(ts){
+    if(!startTime) startTime = ts;
+    let elapsed = (ts - startTime)/1000;
+    if(elapsed >= DURATION){ startTime = ts; elapsed = 0; runChant(); }
+    document.getElementById('progress').style.width = (elapsed/DURATION*100)+'%';
+    setScene(elapsed);
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function start(){ 
+    document.getElementById('startOverlay').classList.add('hide'); 
+    startTime = null; 
+    runChant();
+    cancelAnimationFrame(rafId); 
+    rafId = requestAnimationFrame(loop); 
+  }
+  
+  document.getElementById('startOverlay').addEventListener('click', start);
+  document.getElementById('replayBtn').addEventListener('click', start);
+</script>
+</body>
+</html>
