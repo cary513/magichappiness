@@ -53,7 +53,9 @@
   .scene{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:7 cqw; opacity:0; pointer-events:none; transition:opacity .5s ease; z-index:10; }
   .scene.active{ opacity:1; }
 
-/* Scene 1 底圖：2秒動畫，最後0.3秒淡出 */
+/* ================= Scene 1: 底圖與文字動畫整合 ================= */
+
+  /* 底圖：2秒動畫，最後0.3秒淡出 */
   .bg-silhouette { 
     position: absolute; 
     inset: 0; 
@@ -66,7 +68,6 @@
   }
 
   .scene.active .bg-silhouette { 
-    /* 將動畫時間設定為 2.0 秒 */
     animation: zoomAndFade 2.0s ease-in-out forwards;
   }
 
@@ -86,6 +87,25 @@
       opacity: 0; /* 最後 0.3 秒執行淡出 */
       transform: scale(1.12); /* 微微繼續放大 */
     }
+  }
+
+  /* 標題容器：預設隱藏，確保圖文層次與進場節奏 */
+  .s1-content { 
+    position: relative; 
+    z-index: 2; 
+    opacity: 0; 
+    transition: opacity 1s ease 0.5s; /* 延遲 0.5 秒，讓文字在背景出現後優雅浮現 */
+  }
+
+  /* 啟動時顯示文字 */
+  .scene.active .s1-content { 
+    opacity: 1; 
+  }
+
+  /* 標題樣式統一 */
+  .scene#s1 .cap-title { 
+    text-align: center; 
+    margin: 0; 
   }
 
   /* Scene 2 : 快速拉入 */
@@ -215,7 +235,12 @@
     <div class="stars" id="starsLayer"></div>
     <div class="moon"></div>
 
-    <div class="scene" id="s1"><img src="./sh.jpg" class="bg-silhouette"><div class="cap-title">ARE YOU<br>THE CHOSEN ONE?</div></div>
+<div class="scene" id="s1">
+  <img src="./sh.jpg" class="bg-silhouette">
+  <div class="s1-content">
+    <div class="cap-title">ARE YOU<br>THE CHOSEN ONE?</div>
+  </div>
+</div>
    <div class="scene" id="s2">
   <img src="./which_2.jpg" class="bg-which3">
   <div class="scene-2-content">
