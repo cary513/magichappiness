@@ -159,12 +159,21 @@
   .cap-sub{
     margin-top:10px; font-size:1.05rem; color:var(--violet-soft); font-style:italic;
   }
+  
+  /* STEP 資訊標籤發光效果 */
   .step-badge{
     font-family:'Playfair Display', serif; font-weight:700; font-size:0.85rem;
     color:var(--bg-deep); background:var(--gold);
     padding:4px 12px; border-radius:20px; letter-spacing:.06em;
     margin-bottom:14px;
+    box-shadow: 0 0 12px rgba(227,191,95,0.6), 0 0 25px rgba(227,191,95,0.3);
+    animation: badgeGlow 1.8s ease-in-out infinite;
   }
+  @keyframes badgeGlow {
+    0%, 100% { box-shadow: 0 0 10px rgba(227,191,95,0.5), 0 0 20px rgba(227,191,95,0.2); }
+    50% { box-shadow: 0 0 18px rgba(227,191,95,0.9), 0 0 35px rgba(180,169,255,0.5); }
+  }
+
   .chant{
     font-family:'Playfair Display', serif; font-weight:700; font-size:1.7rem; color:var(--gold);
     text-shadow:0 0 16px rgba(227,191,95,0.6);
@@ -365,7 +374,6 @@
 </div>
 
 <script>
-  // 修改 JavaScript 陣列改為中文字元，讓計時器逐字印出「嘻嘻哈哈哈哈哈哈」
   const chantWords = "嘻嘻哈哈哈哈哈哈".split('');
   let chantTimers = [];
   function runChant(){
